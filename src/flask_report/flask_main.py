@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, url_for
-from src.report.funcs import build_report
+from report.funcs import build_report
 
-data_dir = 'src/report/static/data'
+data_dir = 'static/data'
 pilots = build_report(data_dir)
 
 
