@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.css" rel="stylesheet" type="text/css">
+    <link type="text/css" href="{{ url_for('static', filename='css/styles.css')}}" rel="stylesheet">
+    {% block title -%}
+    {% if title %}
+    <title>{{title}} - Flask Foxminded</title>
+    {% else %}
+    <title>Flask Foxminded</title>
+    {% endif %}
+    {% endblock %}
+</head>
+<body>
+<div class="container">
+    {% block mainmenu -%}
+    <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">F1 Q1</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    {% for m in menu %}
+                    <li class="nav-item"><a class="nav-link" href="{{m.url}}">{{m.name}}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+<!--#Хочу поиграться css на менюшках-->
+<!--    <ul class="mainmenu">-->
+<!--        {% for m in menu %}-->
+<!--        <li><a href="{{m.url}}">{{m.name}}</a></li>-->
+<!--        {% endfor %}-->
+<!--    </ul>-->
+    {% endblock mainmenu -%}
+    {% if title %}
+    <h1>{{title}} - Flask Foxminded</h1>
+    {% else %}
+    <h1>Flask Foxminded</h1>
+    {% endif %}
+    {% block content %}
+    <p>Something beautiful here</p>
+    {% endblock %}
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" charset="utf8"
+            src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8"
+            src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.js"></script>
+    {% block scripts %}{% endblock %}
+</div>
+</body>
+</html>
