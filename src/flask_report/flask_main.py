@@ -1,16 +1,34 @@
-from flask import Flask, render_template, request, url_for
+from flask import Flask, render_template, request
 from report.funcs import build_report
+from flask_restful import Resource, Api
+import json
 
 data_dir = 'static/data'
 pilots = build_report(data_dir)
+pilots_dict = {}
+
+for j in pilots.values():
+    pilots_dict[j.abbr] = [j.name, j.team, str(j.lap_time)]
 
 
 def create_app():
     app = Flask(__name__)
+    api = Api(app)
 
     menu = [{"name": "Report", "url": "/report"},
             {"name": "Drivers", "url": "/drivers?order=Ascending"},
             {"name": "HAM", "url": "/ham"}]
+
+    class Main(Resource):
+        def get(self):
+            return json.dumps(pilots_dict)
+
+    class Driver(Resource):
+        def get(self, pilot_id):
+            return pilots_dict[pilot_id.upper()]
+
+    api.add_resource(Main, '/api/v1/report')
+    api.add_resource(Driver, '/api/v1/report/<pilot_id>')
 
     @app.route('/')
     @app.route('/report')
@@ -40,4 +58,4 @@ def create_app():
 
 if __name__ == '__main__':
     app = create_app()
-    app.run(debug=True)
+    app.run(debug=True, port=3000, host='127.0.0.1')
