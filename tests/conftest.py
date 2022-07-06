@@ -1,6 +1,7 @@
 import pytest
 from src.flask_report.flask_main import create_app
 
+
 @pytest.fixture()
 def client():
     app = create_app()
