@@ -1,8 +1,7 @@
-from flask import Flask, render_template, request, make_response, jsonify
-from report.funcs import build_report, Pilot
+from flask import Flask, render_template, request, make_response, jsonify, Blueprint
+from report.funcs import build_report
 from flask_restful import Resource, Api
-from flasgger import Swagger, LazyString, LazyJSONEncoder
-from flasgger import swag_from
+from flasgger import Swagger, swag_from, LazyString, LazyJSONEncoder
 
 data_dir = 'static/data'
 pilots = build_report(data_dir)
@@ -14,7 +13,7 @@ for j in pilots.values():
 def create_app():
     app = Flask(__name__)
     # app.json_encoder = LazyJSONEncoder
-    api = Api(app)
+    api = Api(app) #,doc=False
     template = {
         'swagger': '2.0',
         'info': {
@@ -24,14 +23,14 @@ def create_app():
                 'responsibleOrganization': 'FIA',
                 'responcibleDeveloper': 'Liberty Media',
                 'email': 'f1@f1.com',
-                'url': 'www.formela1.com'
+                'url': 'www.formula1.com'
             },
             'termsOfService': 'https://www.formula1.com/en/toolbar/legal-notices.html',
             'version': '0.0.1'
         },
-        'host': 'zoo.com',
-        'basePath': 'api',
-        'schemes':['http', 'https'],
+        'host': '127.0.0.1:3000',
+        'basePath': '/api',
+        'schemes': ['http', 'https'],
         'operationId': 'getdrivers'
     }
 
@@ -64,8 +63,11 @@ def create_app():
                                                  data=['Ascending', 'Descending']), 200)
 
     class Driver(Resource):
-        def get(self, pilot_id):
-            return jsonify(pilots_dict[pilot_id.upper()])
+        @swag_from('drivers.yml')
+        @swag_from('drivers.yml')
+        def get(self, driver_id):
+            return jsonify(pilots_dict[driver_id.upper()])
+
 
     class HAM(Resource):
         def get(self):
@@ -73,7 +75,7 @@ def create_app():
 
     api.add_resource(Report, '/report', '/')
     api.add_resource(Drivers, '/drivers')
-    # api.add_resource(Driver, '/drivers/<pilot_id>')
+    api.add_resource(Driver, '/api/drivers/<driver_id>')
     api.add_resource(HAM, '/ham')
 
     # @app.route('/')

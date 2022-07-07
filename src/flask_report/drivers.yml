@@ -1,3 +1,12 @@
+parameters:
+  - name: driver_id
+    in: path
+    type: string
+    enum: ['HAM', 'VET', 'ROS']
+    required: true
+
+
+
 openapi: 3.0.0
 tags:
   - name: Drivers

@@ -31,7 +31,7 @@
     <tr>
         <td>{{p.position}}</td>
         <td><a href="{{url_for('drivers', driver_id=p.abbr)}}">{{p.abbr}} </a></td>
-        <td><a href="https://en.wikipedia.org/wiki/{{p.name}}" target="_blank" rel="nofollow">{{p.name}}</a></td>
+        <td><a href="{{url_for('drivers')}}/{{p.abbr}}" target="_blank" rel="nofollow">{{p.name}}</a></td>
         <td><a href="https://en.wikipedia.org/wiki/{{p.team}}" target="_blank" rel="nofollow">{{p.team}}</a></td>
         <td>{{p.lap_time}}</td>
     </tr>
