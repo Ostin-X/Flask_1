@@ -1,58 +1,104 @@
-from flask import Flask, render_template, request
-from report.funcs import build_report
+from flask import Flask, render_template, request, make_response, jsonify
+from report.funcs import build_report, Pilot
 from flask_restful import Resource, Api
-import json
+from flasgger import Swagger, LazyString, LazyJSONEncoder
+from flasgger import swag_from
 
 data_dir = 'static/data'
 pilots = build_report(data_dir)
 pilots_dict = {}
-
 for j in pilots.values():
     pilots_dict[j.abbr] = [j.name, j.team, str(j.lap_time)]
 
 
 def create_app():
     app = Flask(__name__)
+    # app.json_encoder = LazyJSONEncoder
     api = Api(app)
+    template = {
+        'swagger': '2.0',
+        'info': {
+            'title': 'F1 Q1 report API',
+            'description': 'API for Q1 data',
+            'contact': {
+                'responsibleOrganization': 'FIA',
+                'responcibleDeveloper': 'Liberty Media',
+                'email': 'f1@f1.com',
+                'url': 'www.formela1.com'
+            },
+            'termsOfService': 'https://www.formula1.com/en/toolbar/legal-notices.html',
+            'version': '0.0.1'
+        },
+        'host': 'zoo.com',
+        'basePath': 'api',
+        'schemes':['http', 'https'],
+        'operationId': 'getdrivers'
+    }
 
-    menu = [{"name": "Report", "url": "/report"},
-            {"name": "Drivers", "url": "/drivers?order=Ascending"},
-            {"name": "HAM", "url": "/ham"}]
+    swagger = Swagger(app, template=template)
 
-    class Main(Resource):
+    # base = 'http://127.0.0.1:3000/' + 'api/v1'
+    menu = [{"name": "Report", "url": f"/report"},
+            {"name": "Drivers", "url": f"/drivers?order=Ascending"},
+            {"name": "HAM", "url": f"/ham"}]
+
+    class Report(Resource):
         def get(self):
-            return json.dumps(pilots_dict)
+            headers = {'Content-Type': 'text/html'}
+            return make_response(render_template('report.html', title='Report', menu=menu, pilots=pilots.values()), 200,
+                                 headers)
+
+    class Drivers(Resource):
+        # @swag_from('drivers.yml', methods=['GET'])
+        def get(self):
+            if request.method == 'GET' and request.args.get('order') == 'Descending':
+                desc = ['Descending', True]
+            else:
+                desc = ['Ascending', False]
+            if request.method == 'GET' and request.args.get('driver_id'):
+                pilotzzz = {pilots[request.args.get('driver_id')]}
+            else:
+                pilotzzz = sorted(pilots.values(), key=lambda x: x.position, reverse=desc[1])
+            return make_response(render_template('drivers.html', title='Drivers', menu=menu,
+                                                 pilots=pilotzzz, desc=desc[0],
+                                                 data=['Ascending', 'Descending']), 200)
 
     class Driver(Resource):
         def get(self, pilot_id):
-            return pilots_dict[pilot_id.upper()]
+            return jsonify(pilots_dict[pilot_id.upper()])
 
-    api.add_resource(Main, '/api/v1/report')
-    api.add_resource(Driver, '/api/v1/report/<pilot_id>')
+    class HAM(Resource):
+        def get(self):
+            return make_response(render_template('ham.html', title='HAM', menu=menu), 200)
 
-    @app.route('/')
-    @app.route('/report')
-    def report():
-        return render_template('report.html', title='Report', menu=menu, pilots=pilots.values())
+    api.add_resource(Report, '/report', '/')
+    api.add_resource(Drivers, '/drivers')
+    # api.add_resource(Driver, '/drivers/<pilot_id>')
+    api.add_resource(HAM, '/ham')
 
-    @app.route('/drivers', methods=['GET'])
-    def drivers():
-        if request.method == 'GET' and request.args.get('order') == 'Descending':
-            desc = ['Descending', True]
-        else:
-            desc = ['Ascending', False]
-        if request.method == 'GET' and request.args.get('driver_id'):
-            pilotzzz = {pilots[request.args.get('driver_id')]}
-        else:
-            pilotzzz = sorted(pilots.values(), key=lambda x: x.position, reverse=desc[1])
-        return render_template('drivers.html', title='Drivers', menu=menu,
-                               pilots=pilotzzz, desc=desc[0],
-                               data=['Ascending', 'Descending'])
-
-    @app.route('/ham')
-    def ham():
-        return render_template('ham.html', title='HAM', menu=menu)
-
+    # @app.route('/')
+    # @app.route('/report')
+    # def report():
+    #     return render_template('report.html', title='Report', menu=menu, pilots=pilots.values())
+    #
+    # @app.route('/drivers', methods=['GET'])
+    # def drivers():
+    #     if request.method == 'GET' and request.args.get('order') == 'Descending':
+    #         desc = ['Descending', True]
+    #     else:
+    #         desc = ['Ascending', False]
+    #     if request.method == 'GET' and request.args.get('driver_id'):
+    #         pilotzzz = {pilots[request.args.get('driver_id')]}
+    #     else:
+    #         pilotzzz = sorted(pilots.values(), key=lambda x: x.position, reverse=desc[1])
+    #     return render_template('drivers.html', title='Drivers', menu=menu,
+    #                            pilots=pilotzzz, desc=desc[0],
+    #                            data=['Ascending', 'Descending'])
+    #
+    # @app.route('/ham')
+    # def ham():
+    #     return render_template('ham.html', title='HAM', menu=menu)
+    #
     return app
 
 
