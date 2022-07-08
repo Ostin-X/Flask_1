@@ -7,7 +7,7 @@ data_dir = 'static/data'
 pilots = build_report(data_dir)
 pilots_dict = {}
 for j in pilots.values():
-    pilots_dict[j.abbr] = [j.name, j.team, str(j.lap_time)]
+    pilots_dict[j.abbr] = {'name':j.name, 'team':j.team, 'lap_time':str(j.lap_time)}
 
 
 def create_app():
