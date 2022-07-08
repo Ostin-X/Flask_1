@@ -64,9 +64,8 @@ def create_app():
 
     class Driver(Resource):
         @swag_from('drivers.yml')
-        @swag_from('drivers.yml')
         def get(self, driver_id):
-            return jsonify(pilots_dict[driver_id.upper()])
+            return pilots_dict[driver_id.upper()]
 
 
     class HAM(Resource):
