@@ -2,9 +2,11 @@ parameters:
   - name: driver_id
     in: path
     type: string
-    enum: ['HAM', 'VET', 'ROS']
+    enum: [ 'HAM', 'VET', 'ROS' ]
     required: true
-
+produces:
+  - application/xml
+  - application/json
 
 
 openapi: 3.0.0
@@ -14,9 +16,9 @@ get:
 
   description: None
 responses:
-    '200':
-      description: Successful response
-    '400':
-      description: Bad Request
-    '500':
-      description: Internal Server Error
+  '200':
+    description: Successful response
+  '400':
+    description: Bad Request
+  '500':
+    description: Internal Server Error
