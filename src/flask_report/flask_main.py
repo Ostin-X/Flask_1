@@ -2,8 +2,8 @@ from flask import Flask
 from flask_restful import Api
 from flasgger import Swagger, swag_from, LazyString, LazyJSONEncoder
 
-from flask_api import *
-from flask_html import *
+from src.flask_report.flask_api import *
+from src.flask_report.flask_html import *
 
 
 def create_app():
@@ -30,6 +30,7 @@ def create_app():
     }
 
     swagger = Swagger(app, template=template)
+
     api.add_resource(Report, '/report', '/')
     api.add_resource(Drivers, '/drivers')
     api.add_resource(HAM, '/ham')
