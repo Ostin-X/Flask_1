@@ -1,4 +1,4 @@
-from flask_restful import Resource, Api
+from flask_restful import Resource, Api, abort
 from flask import make_response, render_template, request, Blueprint
 from src.flask_report.config import pilots, menu
 
@@ -19,6 +19,8 @@ class Drivers(Resource):
         else:
             desc = ['Ascending', False]
         if request.method == 'GET' and request.args.get('driver_id'):
+            if request.args.get('driver_id') not in pilots:
+                abort(404, message=f'No such driver {request.args.get("driver_id")}')
             pilotzzz = [pilots[request.args.get('driver_id')]]
         else:
             pilotzzz = sorted(pilots.values(), key=lambda x: x.position, reverse=desc[1])
