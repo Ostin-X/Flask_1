@@ -5,7 +5,6 @@ from flasgger import swag_from
 from dict2xml import dict2xml
 from dicttoxml import dicttoxml
 from src.flask_report.config import pilots
-from xml.etree.ElementTree import Element, tostring
 
 
 class Drivers_API(Resource, Response):
