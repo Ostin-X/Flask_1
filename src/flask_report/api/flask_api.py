@@ -1,13 +1,15 @@
-from flask_restful import Resource, abort
-from flask import request, Response
+from flask_restful import Resource, abort, Api
+from flask import request, Response, Blueprint
 import dataclasses
 from flasgger import swag_from
 from dict2xml import dict2xml
 from dicttoxml import dicttoxml
 from src.flask_report.config import pilots
 
+api_bp = Blueprint('api', __name__, url_prefix='/api/v1')
+api = Api(api_bp)
 
-class Drivers_API(Resource, Response):
+class DriversAPI(Resource, Response):
     @swag_from('drivers.yml')
     def get(self, driver_id=None):
         if request.method == 'GET' and request.args.get('format') and request.args.get('format') == 'xml':
@@ -36,3 +38,6 @@ class Drivers_API(Resource, Response):
     def put(self, driver_id):
         print(request.args)
         print(request.form)
+
+
+api.add_resource(DriversAPI, '/drivers/<driver_id>', '/drivers')

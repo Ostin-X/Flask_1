@@ -1,6 +1,9 @@
-from flask_restful import Resource
-from flask import make_response, render_template, request
+from flask_restful import Resource, Api
+from flask import make_response, render_template, request, Blueprint
 from src.flask_report.config import pilots, menu
+
+site_bp = Blueprint('site', __name__)
+site = Api(site_bp)
 
 
 class Report(Resource):
@@ -27,3 +30,8 @@ class Drivers(Resource):
 class HAM(Resource):
     def get(self):
         return make_response(render_template('ham.html', title='HAM', menu=menu), 200)
+
+
+site.add_resource(Report, '/report', '/')
+site.add_resource(Drivers, '/drivers')
+site.add_resource(HAM, '/ham')
