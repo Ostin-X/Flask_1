@@ -14,7 +14,7 @@ paths:
       - name: format
         in: query
         required: false
-        description: Outout format XML
+        description: Output format XML
         schema:
           type: string
           enum:
@@ -40,7 +40,8 @@ paths:
         in: path
         required: true
         description: Abbreviation of the driver that we want to match
-        type: string
+        schema:
+          $ref: '#/components/schemas/driver_id'
     get:
       tags:
         - Driver Request
