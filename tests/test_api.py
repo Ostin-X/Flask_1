@@ -1,6 +1,5 @@
 import pytest
 import flask
-import requests
 
 
 @pytest.mark.parametrize('test_input, format_res, bytes_res1, bytes_res2', [('/api/v1/drivers', 'application/json',
@@ -35,10 +34,6 @@ def test_single_driver_api_v1_json_xml(client, test_input, format_res, bytes_res
 
 def test_test_request_context():
     app = flask.Flask(__name__)
-    with app.test_request_context('/api/v1/drivers/Lec'):
-        assert flask.request.path == '/api/v1/drivers/Lec'
-        assert flask.request.args['format'] == None
-
-# base = 'http://127.0.0.1:5000'
-# response = requests.get(base+'/api/drivers/RAI', {'format': 'json'})
-# print(response.json())
+    with app.test_request_context('/api/v1/drivers/LEC?format=xml'):
+        assert flask.request.path == '/api/v1/drivers/LEC'
+        assert flask.request.args['format'] == 'xml'
