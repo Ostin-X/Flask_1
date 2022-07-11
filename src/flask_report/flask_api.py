@@ -13,13 +13,16 @@ class Drivers_API(Resource, Response):
     def get(self, driver_id=None):
         if request.method == 'GET' and request.args.get('format') and request.args.get('format') == 'xml':
             if driver_id and driver_id.upper() in pilots:
-                xml_str = dicttoxml(dataclasses.asdict(pilots[driver_id.upper()]), attr_type=False)
-                return Response(xml_str, content_type='application/xml')
+                xml_result = dicttoxml(dataclasses.asdict(pilots[driver_id.upper()]), attr_type=False)
+                return Response(xml_result, content_type='application/xml')
             elif driver_id:
                 abort(404, message=f'No such driver {driver_id}')
             else:
-                xml_str = dicttoxml(dataclasses.asdict(pilots['BOT']), attr_type=False)
-                return Response(xml_str, content_type='application/xml')
+                xml_result = {}
+                for key, value in pilots.items():
+                    xml_result[key] = dataclasses.asdict(value)
+                xml_result = dicttoxml(xml_result, attr_type=False)
+                return Response(xml_result, content_type='application/xml')
         else:
             if driver_id and driver_id.upper() in pilots:
                 return dataclasses.asdict(pilots[driver_id.upper()])
