@@ -5,9 +5,8 @@ from src.flask_report.config import pilots, menu
 
 class Report(Resource):
     def get(self):
-        headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('report.html', title='Report', menu=menu, pilots=pilots.values()), 200,
-                             headers)
+        # headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('report.html', title='Report', menu=menu, pilots=pilots.values()), 200)
 
 
 class Drivers(Resource):
@@ -17,7 +16,7 @@ class Drivers(Resource):
         else:
             desc = ['Ascending', False]
         if request.method == 'GET' and request.args.get('driver_id'):
-            pilotzzz = {pilots[request.args.get('driver_id')]}
+            pilotzzz = [pilots[request.args.get('driver_id')]]
         else:
             pilotzzz = sorted(pilots.values(), key=lambda x: x.position, reverse=desc[1])
         return make_response(render_template('drivers.html', title='Drivers', menu=menu,

@@ -1,7 +1,7 @@
 import pytest
 import flask
 from src.flask_report.flask_main import *
-from report.funcs import Pilot
+from report_f1.funcs import Pilot
 
 
 @pytest.mark.parametrize('test_input', ['/report', '/drivers', '/ham', '/'])
@@ -24,15 +24,15 @@ def test_drivers_request(client, test_input):
     assert b'Lewis Hamilton' in response.data
     assert b'Force India' in response.data
     assert b'ALO' in response.data
-    assert b'0:01:12.848000' in response.data
+    assert b'0:01:12.848' in response.data
 
 
 @pytest.mark.parametrize('test_input', ['/drivers?driver_id=HAM', '/drivers?driver_id=HUL', '/drivers?driver_id=LEC'])
 def test_single_driver_request(client, test_input):
     response = client.get(test_input)
     assert response.status_code == 200
-    assert bytes(pilots[test_input[-3:]].name, 'utf-8') in response.data
-    assert bytes(pilots[test_input[-3:]].team, 'utf-8') in response.data
+    assert bytes(str(pilots[test_input[-3:]].name), 'utf-8') in response.data
+    assert bytes(str(pilots[test_input[-3:]].team), 'utf-8') in response.data
     assert b'Force India' not in response.data
 
 
