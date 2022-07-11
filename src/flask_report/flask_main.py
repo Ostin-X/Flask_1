@@ -33,7 +33,7 @@ def create_app():
     }
 
     swagger_url = '/swagger'
-    api_url = '/static/swagger.json'
+    api_url = '/static/swagger.yaml'
     swaggerui_blueprint = get_swaggerui_blueprint(
         swagger_url,
         api_url,
