@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_restful import Api
-from flasgger import Swagger, swag_from, LazyString, LazyJSONEncoder
+from flasgger import Swagger, LazyString, LazyJSONEncoder
 
 from src.flask_report.flask_api import *
 from src.flask_report.flask_html import *
@@ -34,7 +34,7 @@ def create_app():
     api.add_resource(Report, '/report', '/')
     api.add_resource(Drivers, '/drivers')
     api.add_resource(HAM, '/ham')
-    api.add_resource(Driver, '/api/drivers/<driver_id>', '/api/drivers/VAN/?form=<form>')
+    api.add_resource(Drivers_API, '/api/drivers/<driver_id>', '/api/drivers')
 
     return app
 
