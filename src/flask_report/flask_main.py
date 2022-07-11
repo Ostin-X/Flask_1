@@ -1,8 +1,8 @@
 from flask import Flask
 from flask_restful import Api
 from flasgger import Swagger, LazyString, LazyJSONEncoder
-from src.flask_report.api.flask_api import *
-from src.flask_report.site.flask_html import *
+from src.flask_report.api.routes_api import *
+from src.flask_report.site.routes_html import *
 
 
 def create_app():
