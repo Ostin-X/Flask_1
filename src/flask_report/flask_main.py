@@ -3,6 +3,7 @@ from flask_restful import Api
 from flasgger import Swagger, LazyString, LazyJSONEncoder
 from src.flask_report.api.routes_api import *
 from src.flask_report.site.routes_html import *
+from flask_swagger_ui import get_swaggerui_blueprint
 
 
 def create_app():
@@ -25,13 +26,24 @@ def create_app():
             'termsOfService': 'https://www.formula1.com/en/toolbar/legal-notices.html',
             'version': '0.0.1'
         },
-        'host': '127.0.0.1:3000',
-        'basePath': '/api/v1',
+        'host': '127.0.0.1:5000',
+        'basePath': '/api/v1/drivers',
         'schemes': ['http', 'https'],
         'operationId': 'getdrivers',
     }
 
-    swagger = Swagger(app, template=template)
+    swagger_url = '/swagger'
+    api_url = '/static/swagger.json'
+    swaggerui_blueprint = get_swaggerui_blueprint(
+        swagger_url,
+        api_url,
+        config={
+            'app_name': 'F1 Q1 report API'
+        }
+    )
+    app.register_blueprint(swaggerui_blueprint, url_prefix=swagger_url)
+
+    # swagger = Swagger(app, template=template)
 
     # api.add_resource(Report, '/report', '/')
     # api.add_resource(Drivers, '/drivers')
