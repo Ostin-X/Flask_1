@@ -10,7 +10,7 @@ api_bp = Blueprint('api', __name__, url_prefix='/api/v1')
 api = Api(api_bp)
 
 class DriversAPI(Resource, Response):
-    @swag_from('drivers.yml')
+    @swag_from('drivers.yml', endpoint='drivers')
     def get(self, driver_id=None):
         if request.method == 'GET' and request.args.get('format') and request.args.get('format') == 'xml':
             if driver_id and driver_id.upper() in pilots:

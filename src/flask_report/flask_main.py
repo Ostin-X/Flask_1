@@ -7,7 +7,7 @@ from src.flask_report.site.flask_html import *
 
 def create_app():
     app = Flask(__name__)
-    api = Api(app)  # ,doc=False
+    # api = Api(app)  # ,doc=False
     app.register_blueprint(api_bp)
     app.register_blueprint(site_bp)
 
