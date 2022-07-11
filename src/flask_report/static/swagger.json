@@ -3,11 +3,7 @@
   "info": {
     "description": "Rain-X",
     "version": "1.0.0",
-    "title": "F1 Q1 report API",
-    "license": {
-      "name": "MIT",
-      "url": "https://opensource.org/licenses/MIT"
-    }
+    "title": "F1 Q1 report API"
   },
   "servers": [
     {
