@@ -6,11 +6,6 @@ site_bp = Blueprint('site', __name__)
 site = Api(site_bp)
 
 
-class Report(Resource):
-    def get(self):
-        return make_response(render_template('report.html', title='Report', menu=menu, pilots=pilots.values()), 200)
-
-
 class Drivers(Resource):
     def get(self):
         if request.method == 'GET' and request.args.get('order') == 'Descending':
@@ -33,6 +28,5 @@ class HAM(Resource):
         return make_response(render_template('ham.html', title='HAM', menu=menu), 200)
 
 
-site.add_resource(Report, '/report', '/')
-site.add_resource(Drivers, '/drivers')
+site.add_resource(Drivers, '/drivers', '/')
 site.add_resource(HAM, '/ham')
