@@ -4,17 +4,17 @@ from src.flask_report.flask_main import *
 from report_f1.funcs import Pilot
 
 
-@pytest.mark.parametrize('test_input', ['/report', '/drivers', '/ham', '/'])
+@pytest.mark.parametrize('test_input', ['/drivers', '/ham', '/'])
 def test_get(client, test_input):
     response = client.get(test_input)
     assert response.status_code == 200
     assert response.content_type == 'text/html; charset=utf-8'
 
 
-def test_request_example(client):
-    response = client.get('/report')
-    assert b"table table-striped table-hover" in response.data
-    assert b'"https://en.wikipedia.org/wiki/' in response.data
+# def test_request_example(client):
+#     response = client.get('/report')
+#     assert b"table table-striped table-hover" in response.data
+#     assert b'"https://en.wikipedia.org/wiki/' in response.data
 
 
 @pytest.mark.parametrize('test_input', ['/drivers', '/drivers?order=Ascending', '/drivers?order=Descending'])
