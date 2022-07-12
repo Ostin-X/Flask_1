@@ -10,7 +10,7 @@ api = Api(api_bp)
 
 class DriversAPI(Resource):
     def get(self, driver_id=None):
-        format_ = request.args.get('format')
+        format_ = request.args.get('format', 'json')
         if driver_id and driver_id.upper() in pilots:
             result = dataclasses.asdict(pilots[driver_id.upper()])
         elif driver_id:
@@ -18,7 +18,9 @@ class DriversAPI(Resource):
         else:
             result = {}
             for key, value in pilots.items():
-                result[key] = dataclasses.asdict(pilots[key])
+                result[key] = dataclasses.asdict(value)
+        if format == 'xml':
+            result = dicttoxml(result)
         return result if format_ != 'xml' else Response(dicttoxml(result), content_type='application/xml')
 
 
