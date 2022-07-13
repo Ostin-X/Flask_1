@@ -39,7 +39,7 @@ def test_single_report_request(client, test_input):
     assert b'Force India' not in response.data
 
 
-@pytest.mark.parametrize('test_input', ['/report/drivers?driver_id=HAM', '/report/drivers?driver_id=HUL', '/report/drivers?driver_id=LEC'])
+@pytest.mark.parametrize('test_input', ['/report/drivers/HAM', '/report/drivers/HUL', '/report/drivers/LEC'])
 def test_single_driver_request(client, test_input):
     response = client.get(test_input)
     assert response.status_code == 200
