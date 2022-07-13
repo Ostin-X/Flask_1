@@ -39,6 +39,11 @@ class HAM(Resource):
         return make_response(render_template('ham.html', title='HAM', menu=menu), 200)
 
 
-site.add_resource(Report, '/report', '/')
+@site_bp.app_errorhandler(404)
+def handle_404(e):
+    return render_template('Error404.html', title='Error 404', menu=menu), 404
+
+
+site.add_resource(Report, '/report', '/', endpoint='/report')
 site.add_resource(Drivers, '/report/drivers/<driver_id>', '/report/drivers')
 site.add_resource(HAM, '/ham')
