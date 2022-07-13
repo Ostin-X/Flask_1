@@ -193,10 +193,10 @@ components:
         team:
           type: string
           format: string
-      driverRequests:
-        type: object
-        properties:
-          bookRequest:
-            type: object
-            additionalProperties:
-              $ref: '#/components/schemas/driverRequest'
+    driverRequests:
+      type: object
+      properties:
+        bookRequest:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/driverRequest'
