@@ -8,11 +8,16 @@ site = Api(site_bp)
 
 class Report(Resource):
     def get(self):
-        desc = request.args.get('order', 'Ascending')
-        pilotzzz = sorted(pilots.values(), key=lambda x: x.position, reverse=desc == 'Descending')
-        return make_response(render_template('report.html', title='Report', menu=menu,
-                                             pilots=pilotzzz, desc=desc[0],
-                                             data=['Ascending', 'Descending']), 200)
+        return make_response(render_template('report.html', title='Report', menu=menu, pilots=pilots.values()), 200)
+
+
+# class Report(Resource):
+#     def get(self):
+#         desc = request.args.get('order', 'Ascending')
+#         pilotzzz = sorted(pilots.values(), key=lambda x: x.position, reverse=desc == 'Descending')
+#         return make_response(render_template('report.html', title='Report', menu=menu,
+#                                              pilots=pilotzzz, desc=desc[0],
+#                                              data=['Ascending', 'Descending']), 200)
 
 
 class Drivers(Resource):
