@@ -7,15 +7,10 @@ site = Api(site_bp)
 
 
 class Report(Resource):
-    def get(self, driver_id=None):
+    def get(self):
         desc = request.args.get('order', 'Ascending')
-        if driver_id:
-            if driver_id.upper() not in pilots:
-                abort(404, message=f'No driver {driver_id}')
-            pilotzzz = [pilots[driver_id.upper()]]
-        else:
-            pilotzzz = sorted(pilots.values(), key=lambda x: x.position, reverse=desc == 'Descending')
-        return make_response(render_template('report.html', title='Drivers', menu=menu,
+        pilotzzz = sorted(pilots.values(), key=lambda x: x.position, reverse=desc == 'Descending')
+        return make_response(render_template('report.html', title='Report', menu=menu,
                                              pilots=pilotzzz, desc=desc[0],
                                              data=['Ascending', 'Descending']), 200)
 
@@ -39,6 +34,6 @@ class HAM(Resource):
         return make_response(render_template('ham.html', title='HAM', menu=menu), 200)
 
 
-site.add_resource(Report, '/report/<driver_id>', '/report', '/')
+site.add_resource(Report, '/report', '/')
 site.add_resource(Drivers, '/report/drivers/<driver_id>', '/report/drivers')
 site.add_resource(HAM, '/ham')

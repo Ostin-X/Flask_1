@@ -29,14 +29,14 @@ def test_drivers_request(client, test_input):
     assert b'ALO' in response.data
 
 
-@pytest.mark.parametrize('test_input', ['/report/HAM', '/report/HUL', '/report/LEC'])
-def test_single_report_request(client, test_input):
-    response = client.get(test_input)
-    assert response.status_code == 200
-    assert bytes(str(pilots[test_input[-3:]].name), 'utf-8') in response.data
-    assert bytes(str(pilots[test_input[-3:]].team), 'utf-8') in response.data
-    assert bytes(str(pilots[test_input[-3:]].lap_time), 'utf-8') in response.data
-    assert b'Force India' not in response.data
+# @pytest.mark.parametrize('test_input', ['/report/HAM', '/report/HUL', '/report/LEC'])
+# def test_single_report_request(client, test_input):
+#     response = client.get(test_input)
+#     assert response.status_code == 200
+#     assert bytes(str(pilots[test_input[-3:]].name), 'utf-8') in response.data
+#     assert bytes(str(pilots[test_input[-3:]].team), 'utf-8') in response.data
+#     assert bytes(str(pilots[test_input[-3:]].lap_time), 'utf-8') in response.data
+#     assert b'Force India' not in response.data
 
 
 @pytest.mark.parametrize('test_input', ['/report/drivers/HAM', '/report/drivers/HUL', '/report/drivers/LEC'])

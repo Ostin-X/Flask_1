@@ -27,19 +27,23 @@ class ReportApi(Resource):
 class DriversApi(Resource):
     def get(self, driver_id=None):
         format_ = request.args.get('format', 'json')
-        if driver_id and driver_id.upper() in pilots:
-            result = dataclasses.asdict(pilots[driver_id.upper()])
-            del result['lap_time']
-        elif driver_id:
+        if driver_id and driver_id.upper() not in pilots:
             abort(404, message=f'No driver {driver_id}')
         else:
-            result = {}
-            for key, value in pilots.items():
-                result[key] = dataclasses.asdict(value)
-                del result[key]['lap_time']
-        if format == 'xml':
-            result = dicttoxml(result)
+            result = get_result_list(driver_id)
         return result if format_ != 'xml' else Response(dicttoxml(result), content_type='application/xml')
+
+
+def get_result_list(driver_id):
+    if driver_id:
+        result = dataclasses.asdict(pilots[driver_id.upper()])
+        del result['lap_time']
+    else:
+        result = {}
+        for key, value in pilots.items():
+            result[key] = dataclasses.asdict(value)
+            del result[key]['lap_time']
+    return result
 
 
 api.add_resource(ReportApi, '/report/<driver_id>', '/report')

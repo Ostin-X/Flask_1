@@ -34,48 +34,6 @@ paths:
             application/xml:
               schema:
                 $ref: '#/components/schemas/reportRequests'
-  /report/{driver_id}:
-    parameters:
-      - name: driver_id
-        in: path
-        required: true
-        description: Abbreviation of the driver that we want to match
-        schema:
-          $ref: '#/components/schemas/driver_id'
-    get:
-      tags:
-        - Report Request
-      summary: Get report request with given Abbr
-      parameters:
-        - in: path
-          name: driver_id
-          required: true
-          description: Report Request id
-          schema:
-            $ref: '#/components/schemas/driver_id'
-        - name: format
-          in: query
-          required: false
-          description: Outout format XML
-          schema:
-            type: string
-            enum:
-              - xml
-              - json
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/reportRequest'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/reportRequest'
-        '400':
-          description: Failed. Misunderstood Request.
-        '404':
-          description: Failed. Book request not found.
   /report/drivers:
     parameters:
       - name: format
