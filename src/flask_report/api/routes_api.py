@@ -12,16 +12,10 @@ class ReportApi(Resource):
     def get(self, driver_id=None):
         format_ = request.args.get('format', 'json')
         desc = request.args.get('order', 'asc')
-        if driver_id and driver_id.upper() in pilots:
-            result = dataclasses.asdict(pilots[driver_id.upper()])
-        elif driver_id:
+        if driver_id and driver_id.upper() not in pilots:
             abort(404, message=f'No driver {driver_id}')
         else:
-            result = {}
-            for key, value in sorted(pilots.items(), key=lambda x: x[1].position, reverse=desc == 'desc'):
-                result[key] = dataclasses.asdict(value)
-        if format == 'xml':
-            result = dicttoxml(result)
+            result = get_result_list(driver_id, desc, 'position')
         return result if format_ != 'xml' else Response(dicttoxml(result), content_type='application/xml')
 
 
@@ -32,20 +26,28 @@ class DriversApi(Resource):
         if driver_id and driver_id.upper() not in pilots:
             abort(404, message=f'No driver {driver_id}')
         else:
-            result = get_result_list(driver_id)
-        return result if format_ != 'xml' else Response(dicttoxml(result), content_type='application/xml',
-                                                        reverse=desc == 'desc')
+            result = get_result_list(driver_id, desc, 'name')
+        return result if format_ != 'xml' else Response(dicttoxml(result), content_type='application/xml')
 
 
-def get_result_list(driver_id):
+def get_result_list(driver_id, desc, sort_param):
     if driver_id:
-        result = dataclasses.asdict(pilots[driver_id.upper()])
-        del result['lap_time']
+        result = get_lap_time_right(pilots[driver_id.upper()], sort_param)
     else:
         result = {}
-        for key, value in pilots.items():
-            result[key] = dataclasses.asdict(value)
-            del result[key]['lap_time']
+        if sort_param == 'position':
+            sort_func = lambda x: x[1].position
+        else:
+            sort_func = lambda x: x[1].name.split()[1]
+        for key, pilot in sorted(pilots.items(), key=sort_func, reverse=desc == 'desc'):
+            result[key] = get_lap_time_right(pilot, sort_param)
+    return result
+
+
+def get_lap_time_right(pilot, sort_param):
+    result = dataclasses.asdict(pilot)
+    if sort_param == 'name':
+        del result['lap_time']
     return result
 
 
