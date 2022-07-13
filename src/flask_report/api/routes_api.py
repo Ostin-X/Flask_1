@@ -29,12 +29,15 @@ class DriversApi(Resource):
         format_ = request.args.get('format', 'json')
         if driver_id and driver_id.upper() in pilots:
             result = dataclasses.asdict(pilots[driver_id.upper()])
+            del result['lap_time']
         elif driver_id:
             abort(404, message=f'No driver {driver_id}')
         else:
             result = {}
             for key, value in pilots.items():
+                print(value.lap_time)
                 result[key] = dataclasses.asdict(value)
+                del result[key]['lap_time']
         if format == 'xml':
             result = dicttoxml(result)
         return result if format_ != 'xml' else Response(dicttoxml(result), content_type='application/xml')
