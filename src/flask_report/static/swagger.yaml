@@ -71,7 +71,74 @@ paths:
                 $ref: '#/components/schemas/reportRequest'
             application/xml:
               schema:
-                $ref: '#/components/schemas/reportRequest'
+                $ref: '#/components/schemas/driverRequest'
+        '400':
+          description: Failed. Misunderstood Request.
+        '404':
+          description: Failed. Book request not found.
+  /report/drivers:
+    parameters:
+      - name: format
+        in: query
+        required: false
+        description: Output format XML
+        schema:
+          type: string
+          enum:
+            - xml
+            - json
+    get:
+      tags:
+        - Drivers Request
+      summary: Returns driverRequests
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/driverRequests'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/driverRequests'
+  /report/drivers/{driver_id}:
+    parameters:
+      - name: driver_id
+        in: path
+        required: true
+        description: Abbreviation of the driver that we want to match
+        schema:
+          $ref: '#/components/schemas/driver_id'
+    get:
+      tags:
+        - Drivers Request
+      summary: Get driver request with given Abbr
+      parameters:
+        - in: path
+          name: driver_id
+          required: true
+          description: Driver Request id
+          schema:
+            $ref: '#/components/schemas/driver_id'
+        - name: format
+          in: query
+          required: false
+          description: Outout format XML
+          schema:
+            type: string
+            enum:
+              - xml
+              - json
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/driverRequest'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/driverRequest'
         '400':
           description: Failed. Misunderstood Request.
         '404':
@@ -114,3 +181,22 @@ components:
           type: object
           additionalProperties:
             $ref: '#/components/schemas/reportRequest'
+    driverRequest:
+      type: object
+      properties:
+        abbr:
+          type: string
+          format: string
+        name:
+          type: string
+          format: string
+        team:
+          type: string
+          format: string
+      driverRequests:
+        type: object
+        properties:
+          bookRequest:
+            type: object
+            additionalProperties:
+              $ref: '#/components/schemas/driverRequest'

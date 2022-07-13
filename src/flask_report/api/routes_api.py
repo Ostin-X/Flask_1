@@ -35,7 +35,6 @@ class DriversApi(Resource):
         else:
             result = {}
             for key, value in pilots.items():
-                print(value.lap_time)
                 result[key] = dataclasses.asdict(value)
                 del result[key]['lap_time']
         if format == 'xml':
