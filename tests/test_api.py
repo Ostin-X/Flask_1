@@ -4,8 +4,8 @@ import requests
 
 
 @pytest.mark.parametrize('test_input, format_res, bytes_res1, bytes_res2', [('/api/v1/report', 'application/json',
-                                                                             b'"}, "RAI": {"abbr": "RAI", "name": "Kimi R\\u00e4ikk\\u00f6nen", "team": "',
-                                                                             b'sjean", "team": "Haas F1", "lap_time": "0:01:12.930"}, "GAS": {"abbr": "GAS"'),
+                                                                             b'":"0:01:12.829","name":"Charles Leclerc","team":"Sauber"},"MAG":{"abbr":"MAG',
+                                                                             b'{"abbr":"OCO","lap_time":"No time","name":"Esteban Ocon","team":"Force India'),
                                                                             ('/api/v1/report?format=xml',
                                                                              'application/xml',
                                                                              b'ndoorne</name><team type="str">McLaren</team><lap_time type="str">0:01:12.46',
@@ -20,8 +20,8 @@ def test_report_api_v1_json_xml(client, test_input, format_res, bytes_res1, byte
 
 @pytest.mark.parametrize('test_input, format_res, bytes_res1, bytes_res2',
                          [('/api/v1/report/drivers', 'application/json',
-                            b'br": "GRO", "name": "Romain Grosjean", "team": "Haas F1"}, "HAM"',
-                           b'HAM", "name": "Lewis Hamilton", "team": "Mercedes F1"}, "HAR": {"abbr": "HAR'),
+                            b'Mercedes F1"},"HAR":{"abbr":"HAR","name":"Brendon Hartley","team":"Scuderia ',
+                           b'r":"MAG","name":"Kevin Magnussen","team":"Haas F1"},"OCO":{"abbr":"OCO","nam'),
                           ('/api/v1/report/drivers?format=xml',
                            'application/xml',
                            b'"><abbr type="str">VET</abbr><name type="str">Sebastian Vettel</name><team t',
@@ -35,7 +35,7 @@ def test_drivers_api_v1_json_xml(client, test_input, format_res, bytes_res1, byt
 
 
 @pytest.mark.parametrize('test_input, format_res, bytes_res1, bytes_res2', [('/api/v1/report/LEC', 'application/json',
-                                                                             b'{"abbr": "LEC", "name": "Charles Leclerc", "team": "Sauber", "lap_time": "0:',
+                                                                             b'{"abbr":"LEC","name":"Charles Leclerc","team":"Sauber"}\n',
                                                                              b'01:12.829"}\n'),
                                                                             ('/api/v1/report/BOT?format=xml',
                                                                              'application/xml',
@@ -50,7 +50,7 @@ def test_single_report_api_v1_json_xml(client, test_input, format_res, bytes_res
 
 
 @pytest.mark.parametrize('test_input, format_res, bytes_res1', [('/api/v1/report/drivers/LEC', 'application/json',
-                                                                 b'{"abbr": "LEC", "name": "Charles Leclerc", "team": "Sauber"}\n'),
+                                                                 b'{"abbr":"LEC","name":"Charles Leclerc","team":"Sauber"}'),
                                                                 ('/api/v1/report/drivers/BOT?format=xml',
                                                                  'application/xml',
                                                                  b'<?xml version="1.0" encoding="UTF-8" ?><root><abbr type="str">BOT</abbr><nam')])
