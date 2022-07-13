@@ -17,7 +17,7 @@ class ReportApi(Resource):
             abort(404, message=f'No driver {driver_id}')
         else:
             result = {}
-            for key, value in pilots.items():
+            for key, value in sorted(pilots.items(), key=lambda x: x[1].position):
                 result[key] = dataclasses.asdict(value)
         if format == 'xml':
             result = dicttoxml(result)

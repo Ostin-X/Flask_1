@@ -6,10 +6,10 @@ info:
 servers:
   - url: /api/v1
 tags:
-  - name: Drivers Request
-    description: Example API for requesting and return drivers requests
+  - name: Report Request
+    description: Example API for requesting and return report requests
 paths:
-  /drivers:
+  /report:
     parameters:
       - name: format
         in: query
@@ -22,19 +22,19 @@ paths:
             - json
     get:
       tags:
-        - Drivers Request
-      summary: Returns driverRequests
+        - Report Request
+      summary: Returns reportRequests
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/driverRequests'
+                $ref: '#/components/schemas/reportRequests'
             application/xml:
               schema:
-                $ref: '#/components/schemas/driverRequests'
-  /drivers/{driver_id}:
+                $ref: '#/components/schemas/reportRequests'
+  /report/{driver_id}:
     parameters:
       - name: driver_id
         in: path
@@ -44,13 +44,13 @@ paths:
           $ref: '#/components/schemas/driver_id'
     get:
       tags:
-        - Driver Request
-      summary: Get driver request with given Abbr
+        - Report Request
+      summary: Get report request with given Abbr
       parameters:
         - in: path
           name: driver_id
           required: true
-          description: Driver Request id
+          description: Report Request id
           schema:
             $ref: '#/components/schemas/driver_id'
         - name: format
@@ -68,10 +68,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/driverRequest'
+                $ref: '#/components/schemas/reportRequest'
             application/xml:
               schema:
-                $ref: '#/components/schemas/driverRequest'
+                $ref: '#/components/schemas/reportRequest'
         '400':
           description: Failed. Misunderstood Request.
         '404':
@@ -92,7 +92,7 @@ components:
           minLength: 3
           maxLength: 4
           example: xml
-    driverRequest:
+    reportRequest:
       type: object
       properties:
         abbr:
@@ -107,10 +107,10 @@ components:
         lap_time:
           type: string
           format: string
-    driverRequests:
+    reportRequests:
       type: object
       properties:
         bookRequest:
           type: object
           additionalProperties:
-            $ref: '#/components/schemas/driverRequest'
+            $ref: '#/components/schemas/reportRequest'
