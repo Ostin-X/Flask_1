@@ -71,7 +71,7 @@ paths:
                 $ref: '#/components/schemas/reportRequest'
             application/xml:
               schema:
-                $ref: '#/components/schemas/driverRequest'
+                $ref: '#/components/schemas/reportRequest'
         '400':
           description: Failed. Misunderstood Request.
         '404':

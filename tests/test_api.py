@@ -1,5 +1,6 @@
 import pytest
 import flask
+import requests
 
 
 @pytest.mark.parametrize('test_input, format_res, bytes_res1, bytes_res2', [('/api/v1/report', 'application/json',
@@ -72,3 +73,9 @@ def test_drivers_request_context():
     with app.test_request_context('/api/v1/report/drivers/LEC?format=xml'):
         assert flask.request.path == '/api/v1/report/drivers/LEC'
         assert flask.request.args['format'] == 'xml'
+
+
+def test_report_requests():
+    response = requests.get('http://127.0.0.1:5000/api/v1/report/VET?format=xml')
+    assert response.status_code == 200
+    print(response.headers)
