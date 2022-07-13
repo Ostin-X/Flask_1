@@ -20,8 +20,8 @@ def test_report_api_v1_json_xml(client, test_input, format_res, bytes_res1, byte
 
 @pytest.mark.parametrize('test_input, format_res, bytes_res1, bytes_res2',
                          [('/api/v1/report/drivers', 'application/json',
-                           b'1"}, "RAI": {"abbr": "RAI", "name": "Kimi R\\u00e4ikk\\u00f6nen", "team": ',
-                           b'"HUL": {"abbr": "HUL", "name": "Nico Hulkenberg", "team": "Renault F1"}, "VA'),
+                            b'br": "GRO", "name": "Romain Grosjean", "team": "Haas F1"}, "HAM"',
+                           b'HAM", "name": "Lewis Hamilton", "team": "Mercedes F1"}, "HAR": {"abbr": "HAR'),
                           ('/api/v1/report/drivers?format=xml',
                            'application/xml',
                            b'"><abbr type="str">VET</abbr><name type="str">Sebastian Vettel</name><team t',
