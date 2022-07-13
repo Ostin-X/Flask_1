@@ -13,7 +13,7 @@
 #         pilotzzz = {pilots[request.args.get('driver_id')]}
 #     else:
 #         pilotzzz = sorted(pilots.values(), key=lambda x: x.position, reverse=desc[1])
-#     return render_template('drivers.html', title='Drivers', menu=menu,
+#     return render_template('report.html', title='Drivers', menu=menu,
 #                            pilots=pilotzzz, desc=desc[0],
 #                            data=['Ascending', 'Descending'])
 #
