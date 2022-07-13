@@ -8,16 +8,13 @@ site = Api(site_bp)
 
 class Report(Resource):
     def get(self, driver_id=None):
-        if request.method == 'GET' and request.args.get('order') == 'Descending':
-            desc = ['Descending', True]
-        else:
-            desc = ['Ascending', False]
+        desc = request.args.get('order', 'Ascending')
         if driver_id:
             if driver_id.upper() not in pilots:
                 abort(404, message=f'No driver {driver_id}')
             pilotzzz = [pilots[driver_id.upper()]]
         else:
-            pilotzzz = sorted(pilots.values(), key=lambda x: x.position, reverse=desc[1])
+            pilotzzz = sorted(pilots.values(), key=lambda x: x.position, reverse=desc == 'Descending')
         return make_response(render_template('report.html', title='Drivers', menu=menu,
                                              pilots=pilotzzz, desc=desc[0],
                                              data=['Ascending', 'Descending']), 200)
@@ -25,16 +22,13 @@ class Report(Resource):
 
 class Drivers(Resource):
     def get(self, driver_id=None):
-        if request.method == 'GET' and request.args.get('order') == 'Descending':
-            desc = ['Descending', True]
-        else:
-            desc = ['Ascending', False]
+        desc = request.args.get('order', 'Ascending')
         if driver_id:
             if driver_id.upper() not in pilots:
                 abort(404, message=f'No driver {driver_id}')
             pilotzzz = [pilots[driver_id]]
         else:
-            pilotzzz = sorted(pilots.values(), key=lambda x: x.name.split()[1], reverse=desc[1])
+            pilotzzz = sorted(pilots.values(), key=lambda x: x.name.split()[1], reverse=desc == 'Descending')
         return make_response(render_template('drivers.html', title='Drivers', menu=menu,
                                              pilots=pilotzzz, desc=desc[0],
                                              data=['Ascending', 'Descending']), 200)
