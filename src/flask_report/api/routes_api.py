@@ -12,9 +12,6 @@ class ReportApi(Resource):
     def get(self, driver_id=None):
         format_ = request.args.get('format', 'json')
         desc = request.args.get('order', 'asc')
-        # if driver_id and driver_id.upper() not in pilots:
-        #     abort(404, message=f'No driver {driver_id}')
-        # else:
         result = get_result_list(driver_id, desc, 'position')
         return result if format_ != 'xml' else Response(dicttoxml(result), content_type='application/xml')
 
@@ -23,9 +20,6 @@ class DriversApi(Resource):
     def get(self, driver_id=None):
         format_ = request.args.get('format', 'json')
         desc = request.args.get('order', 'acs')
-        # if driver_id and driver_id.upper() not in pilots:
-        #     abort(404, message=f'No driver {driver_id}')
-        # else:
         result = get_result_list(driver_id, desc, 'name')
         return result if format_ != 'xml' else Response(dicttoxml(result), content_type='application/xml')
 
