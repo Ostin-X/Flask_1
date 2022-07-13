@@ -20,6 +20,15 @@ paths:
           enum:
             - xml
             - json
+      - name: order
+        in: query
+        required: false
+        description: Output order
+        schema:
+          type: string
+          enum:
+            - desc
+            - asc
     get:
       tags:
         - Report Request
@@ -45,6 +54,15 @@ paths:
           enum:
             - xml
             - json
+      - name: order
+        in: query
+        required: false
+        description: Output order
+        schema:
+          type: string
+          enum:
+            - desc
+            - asc
     get:
       tags:
         - Drivers Request
