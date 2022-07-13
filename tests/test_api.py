@@ -3,12 +3,12 @@ import flask
 
 
 @pytest.mark.parametrize('test_input, format_res, bytes_res1, bytes_res2', [('/api/v1/report', 'application/json',
-                                                                             b'", "lap_time": "No time"}, "VET": {"abbr": "VET", "name": "Sebastian Vettel"',
-                                                                             b'main Grosjean", "team": "Haas F1", "lap_time": "0:01:12.930"}, "HAR": {"abbr'),
+                                                                             b'"}, "RAI": {"abbr": "RAI", "name": "Kimi R\\u00e4ikk\\u00f6nen", "team": "',
+                                                                             b'sjean", "team": "Haas F1", "lap_time": "0:01:12.930"}, "GAS": {"abbr": "GAS"'),
                                                                             ('/api/v1/report?format=xml',
                                                                              'application/xml',
-                                                                             b'"><abbr type="str">VET</abbr><name type="str">Sebastian Vettel</name><team t',
-                                                                             b'0</lap_time></SAI><PER type="dict"><abbr type="str">PER</abbr><name type="st')])
+                                                                             b'ndoorne</name><team type="str">McLaren</team><lap_time type="str">0:01:12.46',
+                                                                             b't"><abbr type="str">LEC</abbr><name type="str">Charles Leclerc</name><team t')])
 def test_report_api_v1_json_xml(client, test_input, format_res, bytes_res1, bytes_res2):
     response = client.get(test_input)
     assert response.status_code == 200
