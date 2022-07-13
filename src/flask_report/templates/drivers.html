@@ -30,8 +30,8 @@
     {% for p in pilots %}
     <tr>
         <td>{{p.position}}</td>
-        <td><a href="{{url_for('site.report', driver_id=p.abbr)}}">{{p.abbr}} </a></td>
-        <td><a href="api/v1{{url_for('site.report')}}/{{p.abbr}}" target="_blank" rel="nofollow">{{p.name}}</a></td>
+        <td>{{p.abbr}} </a></td>
+        <td><a href="https://en.wikipedia.org/wiki/{{p.name}}" target="_blank" rel="nofollow">{{p.name}}</a></td>
         <td><a href="https://en.wikipedia.org/wiki/{{p.team}}" target="_blank" rel="nofollow">{{p.team}}</a></td>
         <td>{{p.lap_time}}</td>
     </tr>
