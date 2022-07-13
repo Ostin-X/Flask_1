@@ -28,7 +28,7 @@ def get_result_list(driver_id, desc, sort_param):
     if driver_id and driver_id.upper() not in pilots:
         abort(404, message=f'No driver {driver_id}')
     elif driver_id:
-        result = get_lap_time_right(pilots[driver_id.upper()], sort_param)
+        result = get_result_pilot(pilots[driver_id.upper()], sort_param)
     else:
         result = {}
         if sort_param == 'position':
@@ -36,11 +36,11 @@ def get_result_list(driver_id, desc, sort_param):
         else:
             sort_func = lambda x: x[1].name.split()[1]
         for key, pilot in sorted(pilots.items(), key=sort_func, reverse=desc == 'desc'):
-            result[key] = get_lap_time_right(pilot, sort_param)
+            result[key] = get_result_pilot(pilot, sort_param)
     return result
 
 
-def get_lap_time_right(pilot, sort_param):
+def get_result_pilot(pilot, sort_param):
     result = dataclasses.asdict(pilot)
     if sort_param == 'name':
         del result['lap_time']
