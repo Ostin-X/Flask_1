@@ -6,6 +6,7 @@ from flask_swagger_ui import get_swaggerui_blueprint
 
 def create_app():
     app = Flask(__name__)
+    app.config['JSON_SORT_KEYS'] = False
     app.register_blueprint(api_bp)
     app.register_blueprint(site_bp)
 
