@@ -51,10 +51,7 @@ def get_result_pilot(pilot, sort_param):
 
 def get_result_format(result, format_):
     if format_ == 'json':
-        print(result)
         result = jsonify(result).data
-        print('______________________________')
-        print(result)
     else:
         result = dicttoxml(result)
     return result
