@@ -54,6 +54,7 @@ def get_result_format(result, format_):
         result = jsonify(result).data
     else:
         result = dicttoxml(result)
+    #ktdsq rfvtyn
     return result
 
 
