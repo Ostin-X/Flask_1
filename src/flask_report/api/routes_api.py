@@ -33,7 +33,7 @@ def get_result_list(driver_id, desc, sort_param):
         abort(404, message=f'No driver {driver_id}')
     elif driver_id:
         # result = get_result_pilot(pilots[driver_id.upper()], sort_param)
-        result = get_result_pilot(Pilot.get(Pilot.abbr == driver_id.upper()), sort_param, SessionTime)
+        result = get_result_pilot(Pilot.get(Pilot.abbr == driver_id.upper()), sort_param)
     else:
         result = {}
         # if sort_param == 'position':
