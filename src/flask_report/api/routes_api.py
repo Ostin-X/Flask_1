@@ -1,8 +1,8 @@
 from flask_restful import Resource, abort, Api
 from flask import request, Response, Blueprint, jsonify
-import dataclasses
+# import dataclasses
 from dicttoxml import dicttoxml
-from src.flask_report.config import pilots
+# from src.flask_report.config import pilots
 from src.flask_report.DB.DB import *
 
 api_bp = Blueprint('api', __name__, url_prefix='/api/v1')
@@ -28,11 +28,12 @@ class DriversApi(Resource):
 
 
 def get_result_list(driver_id, desc, sort_param):
-    if driver_id and driver_id.upper() not in pilots:
+    # if driver_id and driver_id.upper() not in pilots:
+    if driver_id and not Pilot.select().where(Pilot.abbr == driver_id):
         abort(404, message=f'No driver {driver_id}')
     elif driver_id:
         # result = get_result_pilot(pilots[driver_id.upper()], sort_param)
-        result = get_result_pilot(Pilot.get(Pilot.abbr == driver_id), sort_param)
+        result = get_result_pilot(Pilot.get(Pilot.abbr == driver_id), sort_param, SessionTime)
     else:
         result = {}
         # if sort_param == 'position':
