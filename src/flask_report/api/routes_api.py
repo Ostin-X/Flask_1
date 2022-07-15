@@ -35,15 +35,18 @@ def get_result_list(driver_id, desc, sort_param):
         result = get_result_pilot(Pilot.get(Pilot.abbr == driver_id), sort_param)
     else:
         result = {}
-        if sort_param == 'position':
-            sort_func = lambda x: x[1].position
+        # if sort_param == 'position':
+        #     sort_func = lambda x: x[1].position
+        # else:
+        #     sort_func = lambda x: x[1].name.split()[1]
+        # for key, pilot in sorted(pilots.items(), key=sort_func, reverse=desc == 'desc'):
+        if desc == 'desc':
+            sorted_db = Pilot.select().order_by(Pilot.abbr.desc())
         else:
-            sort_func = lambda x: x[1].name.split()[1]
-        for key, pilot in sorted(pilots.items(), key=sort_func, reverse=desc == 'desc'):
+            sorted_db = Pilot.select().order_by(Pilot.abbr)
+        for key in sorted_db:
             # result[key] = get_result_pilot(pilot, sort_param)
-            result[key] = get_result_pilot(Pilot.get(Pilot.abbr == key), sort_param, SessionTime)
-        for key in Pilot.select().order_by(Pilot.abbr.desc()):
-            print(key)
+            result[key.abbr] = get_result_pilot(Pilot.get(Pilot.abbr == key), sort_param, SessionTime)
     return result
 
 
