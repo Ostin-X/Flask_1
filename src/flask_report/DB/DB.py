@@ -1,5 +1,5 @@
 from peewee import *
-# from src.flask_report.config import pilots
+from src.flask_report.config import pilots
 
 
 db = SqliteDatabase('pilots.db')
@@ -32,7 +32,7 @@ class Team(Model):
 class Pilot(Model):
     abbr = CharField(primary_key=True)
     name = CharField()
-    team = ForeignKeyField(Team, backref='pilots', )
+    team = ForeignKeyField(Team, backref='pilot', )
     nation = CharField()
 
     class Meta:
@@ -73,8 +73,9 @@ def create_pilots_and_lap_times(pilots, pilot_nations):
             pass
 
 
-# for pilot_ in Pilot.select():
-#     print(pilot_.name)
+# for pilot_ in Team.select():
+#     for pi in pilot_.select():
+#         print(pi.pilot.get())
 
 # hami = Pilot.select().where(Pilot.name == 'Lewis Hamilton').get()
 # print(hami.name)
@@ -89,3 +90,7 @@ def create_pilots_and_lap_times(pilots, pilot_nations):
 #          .where(Pilot.abbr == 'HAM'))
 # for pi in query:
 #     print(pi.name,pi.team.name)
+#
+# for pi in Pilot.select().order_by(Pilot.abbr):
+#     print(pi.lap_time.get().lap_time)
+#     print(pi.lap_time.select())
