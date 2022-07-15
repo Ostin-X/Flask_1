@@ -29,11 +29,11 @@ class DriversApi(Resource):
 
 def get_result_list(driver_id, desc, sort_param):
     # if driver_id and driver_id.upper() not in pilots:
-    if driver_id and not Pilot.select().where(Pilot.abbr == driver_id):
+    if driver_id and not Pilot.select().where(Pilot.abbr == driver_id.upper()):
         abort(404, message=f'No driver {driver_id}')
     elif driver_id:
         # result = get_result_pilot(pilots[driver_id.upper()], sort_param)
-        result = get_result_pilot(Pilot.get(Pilot.abbr == driver_id), sort_param, SessionTime)
+        result = get_result_pilot(Pilot.get(Pilot.abbr == driver_id.upper()), sort_param, SessionTime)
     else:
         result = {}
         # if sort_param == 'position':
