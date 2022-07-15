@@ -4,8 +4,8 @@ import requests
 
 
 @pytest.mark.parametrize('test_input, format_res, bytes_res1, bytes_res2', [('/api/v1/report', 'application/json',
-                                                                             b'":"0:01:12.829","name":"Charles Leclerc","team":"Sauber"},"MAG":{"abbr":"MAG',
-                                                                             b'{"abbr":"OCO","lap_time":"No time","name":"Esteban Ocon","team":"Force India'),
+                                                                             b'"team":"Toro Rosso","lap_tim',
+                                                                             b'"ERI":{"abbr":"ERI","name'),
                                                                             ('/api/v1/report?format=xml',
                                                                              'application/xml',
                                                                              b'ndoorne</name><team type="str">McLaren</team><lap_time type="str">0:01:12.46',
@@ -20,12 +20,12 @@ def test_report_api_v1_json_xml(client, test_input, format_res, bytes_res1, byte
 
 @pytest.mark.parametrize('test_input, format_res, bytes_res1, bytes_res2',
                          [('/api/v1/report/drivers', 'application/json',
-                            b'Mercedes F1"},"HAR":{"abbr":"HAR","name":"Brendon Hartley","team":"Scuderia ',
-                           b'r":"MAG","name":"Kevin Magnussen","team":"Haas F1"},"OCO":{"abbr":"OCO","nam'),
+                            b'"team":"Haas"},"OCO":{"abbr":"OCO","nam',
+                           b'"RIC","name":"Daniel Ricciar'),
                           ('/api/v1/report/drivers?format=xml',
                            'application/xml',
-                           b'"><abbr type="str">VET</abbr><name type="str">Sebastian Vettel</name><team t',
-                           b'abbr><name type="str">Valtteri Bottas</name><team type="str">Mercedes F1</te')])
+                           b'><LEC type="dict"><abbr type="str">L',
+                           b' type="str">Kimi R')])
 def test_drivers_api_v1_json_xml(client, test_input, format_res, bytes_res1, bytes_res2):
     response = client.get(test_input)
     assert response.status_code == 200
