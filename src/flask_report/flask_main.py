@@ -2,6 +2,10 @@ from flask import Flask
 from src.flask_report.api.routes_api import *
 from src.flask_report.site.routes_html import *
 from flask_swagger_ui import get_swaggerui_blueprint
+from src.flask_report.DB.DB import *
+
+create_teams(teams)
+create_pilots_and_lap_times(pilots, pilot_nations)
 
 
 def create_app():

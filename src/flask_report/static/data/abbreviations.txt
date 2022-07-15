@@ -1,19 +1,19 @@
-RIC_Daniel Ricciardo_Red Bull Racing
-VET_Sebastian Vettel_Scuderia Ferrari
-HAM_Lewis Hamilton_Mercedes F1
-RAI_Kimi Räikkönen_Scuderia Ferrari
-BOT_Valtteri Bottas_Mercedes F1
+RIC_Daniel Ricciardo_Red Bull
+VET_Sebastian Vettel_Ferrari
+HAM_Lewis Hamilton_Mercedes
+RAI_Kimi Räikkönen_Ferrari
+BOT_Valtteri Bottas_Mercedes
 OCO_Esteban Ocon_Force India
 ALO_Fernando Alonso_McLaren
-SAI_Carlos Sainz_Renault F1
+SAI_Carlos Sainz_Renault
 PER_Sergio Perez_Force India
-GAS_Pierre Gasly_Scuderia Toro Rosso
-HUL_Nico Hulkenberg_Renault F1
+GAS_Pierre Gasly_Toro Rosso
+HUL_Nico Hulkenberg_Renault
 VAN_Stoffel Vandoorne_McLaren
-SIR_Sergey Sirotkin_Williams F1
+SIR_Sergey Sirotkin_Williams
 LEC_Charles Leclerc_Sauber
-GRO_Romain Grosjean_Haas F1
-HAR_Brendon Hartley_Scuderia Toro Rosso
+GRO_Romain Grosjean_Haas
+HAR_Brendon Hartley_Toro Rosso
 ERI_Marcus Ericsson_Sauber
-STR_Lance Stroll_Williams F1
-MAG_Kevin Magnussen_Haas F1
+STR_Lance Stroll_Williams
+MAG_Kevin Magnussen_Haas
