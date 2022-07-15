@@ -51,11 +51,11 @@ def get_result_list(driver_id, desc, sort_param):
             sorted_db = Pilot.select().join(SessionTime).group_by(Pilot).order_by(SessionTime.lap_time)
         for key in sorted_db:
             # result[key] = get_result_pilot(pilot, sort_param)
-            result[key.abbr] = get_result_pilot(Pilot.get(Pilot.abbr == key), sort_param, SessionTime)
+            result[key.abbr] = get_result_pilot(Pilot.get(Pilot.abbr == key), sort_param)
     return result
 
 
-def get_result_pilot(pilot, sort_param, SessionTime):
+def get_result_pilot(pilot, sort_param):
     # result = dataclasses.asdict(pilot)
     result = {'abbr': pilot.abbr, 'name': pilot.name, 'team': pilot.team.name}
     # if sort_param == 'name':
