@@ -3,6 +3,7 @@ from flask import request, Response, Blueprint, jsonify
 import dataclasses
 from dicttoxml import dicttoxml
 from src.flask_report.config import pilots
+from src.flask_report.DB.DB import *
 
 api_bp = Blueprint('api', __name__, url_prefix='/api/v1')
 api = Api(api_bp)
@@ -30,7 +31,8 @@ def get_result_list(driver_id, desc, sort_param):
     if driver_id and driver_id.upper() not in pilots:
         abort(404, message=f'No driver {driver_id}')
     elif driver_id:
-        result = get_result_pilot(pilots[driver_id.upper()], sort_param)
+        # result = get_result_pilot(pilots[driver_id.upper()], sort_param)
+        result = get_result_pilot(Pilot.get(Pilot.abbr == driver_id), sort_param)
     else:
         result = {}
         if sort_param == 'position':
@@ -38,14 +40,20 @@ def get_result_list(driver_id, desc, sort_param):
         else:
             sort_func = lambda x: x[1].name.split()[1]
         for key, pilot in sorted(pilots.items(), key=sort_func, reverse=desc == 'desc'):
-            result[key] = get_result_pilot(pilot, sort_param)
+            # result[key] = get_result_pilot(pilot, sort_param)
+            result[key] = get_result_pilot(Pilot.get(Pilot.abbr == key), sort_param, SessionTime)
+        for key in Pilot.select().order_by(Pilot.abbr.desc()):
+            print(key)
     return result
 
 
-def get_result_pilot(pilot, sort_param):
-    result = dataclasses.asdict(pilot)
-    if sort_param == 'name':
-        del result['lap_time']
+def get_result_pilot(pilot, sort_param, SessionTime):
+    # result = dataclasses.asdict(pilot)
+    result = {'abbr': pilot.abbr, 'name': pilot.name, 'team': pilot.team.name}
+    # if sort_param == 'name':
+    #     del result['lap_time']
+    if sort_param == 'position':
+        result['lap_time'] = SessionTime.get(SessionTime.pilot_abbr == result['abbr']).lap_time
     return result
 
 

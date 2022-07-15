@@ -1,5 +1,5 @@
 from peewee import *
-from src.flask_report.config import pilots
+# from src.flask_report.config import pilots
 
 
 db = SqliteDatabase('pilots.db')
@@ -76,16 +76,16 @@ def create_pilots_and_lap_times(pilots, pilot_nations):
 # for pilot_ in Pilot.select():
 #     print(pilot_.name)
 
-hami = Pilot.select().where(Pilot.name == 'Lewis Hamilton').get()
-print(hami.name)
-hami = Pilot.get('Lewis Hamilton' == Pilot.name)
-print(hami.team.name)
-for pi in Pilot.select().join(Team).where(Team.abbr == 'FER'):
-    print(pi.name)
-print('_______________________')
-query = (Pilot
-         .select(Pilot, Team)
-         .join(Team)
-         .where(Pilot.abbr == 'HAM'))
-for pi in query:
-    print(pi.name,pi.team.name)
+# hami = Pilot.select().where(Pilot.name == 'Lewis Hamilton').get()
+# print(hami.name)
+# hami = Pilot.get('Lewis Hamilton' == Pilot.name)
+# print(hami.team.name)
+# for pi in Pilot.select().join(Team).where(Team.abbr == 'FER'):
+#     print(pi.name)
+# print('_______________________')
+# query = (Pilot
+#          .select(Pilot, Team)
+#          .join(Team)
+#          .where(Pilot.abbr == 'HAM'))
+# for pi in query:
+#     print(pi.name,pi.team.name)
