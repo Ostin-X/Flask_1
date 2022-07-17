@@ -14,7 +14,7 @@ class BaseModel(Model):
 
 class Team(BaseModel):
     engine = CharField()
-    nation = CharField()
+    base = CharField()
 
 
 class Pilot(BaseModel):
@@ -30,11 +30,7 @@ class SessionTime(Model):
 
 
 def create_teams(teams):
-    for team in teams:
-        team_abbr = team[0][:3].upper()
-        if not Team.select().where(Team.abbr == team_abbr).exists():
-            Team.create(abbr=team_abbr, name=team[0], engine=team[1], nation=team[2],
-                        base=team[3])
+    Team.insert_many(teams, fields=[Team.abbr, Team.name, Team.engine, Team.nation, Team.base]).execute()
 
 
 def create_pilots(pilots, pilot_nations):
