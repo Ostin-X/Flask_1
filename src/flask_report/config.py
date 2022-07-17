@@ -10,7 +10,7 @@ teams = [['SAU', 'Sauber', 'Ferrari', 'Switzerland', 'Hinwill, CH'],
          ['FOR', 'Force India', 'Mercedes', 'United Kingdom', 'Silverstone, UK'],
          ['FER', 'Ferrari', 'Ferrari', 'Italy', 'Maranello, IT'],
          ['HAA', 'Haas', 'Ferrari', 'United States', 'Kannapolis, US'],
-         ['MCR', 'McLaren', 'Mercedes', 'United Kingdom', 'Woking, UK'],
+         ['MCL', 'McLaren', 'Mercedes', 'United Kingdom', 'Woking, UK'],
          ['MER', 'Mercedes', 'Mercedes', 'Germany', 'Brackley, UK'],
          ['RED', 'Red Bull', 'Red Bull', 'Austria', 'Milton Keynes, UK'],
          ['WIL', 'Williams', 'Mercedes', 'United Kingdom', 'Grove, UK']]

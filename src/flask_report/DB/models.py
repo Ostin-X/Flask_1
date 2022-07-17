@@ -28,8 +28,12 @@ class SessionTime(Model):
     class Meta:
         database = db
 
-
 def create_teams(teams):
+    # for team in teams:
+    #     team_abbr = team[1][:3].upper()
+    #     if not Team.select().where(Team.abbr == team_abbr).exists():
+    #         Team.create(abbr=team_abbr, name=team[1], engine=team[2], nation=team[3],
+    #                     base=team[4])
     Team.insert_many(teams, fields=[Team.abbr, Team.name, Team.engine, Team.nation, Team.base]).execute()
 
 
