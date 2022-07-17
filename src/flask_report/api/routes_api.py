@@ -33,11 +33,11 @@ def get_result_list(driver_id, desc, sort_param):
     else:
         result = {}
         if desc == 'desc' and sort_param == 'name':
-            sorted_db = Pilot.select().order_by(Pilot.abbr.desc())
+            sorted_db = Pilot.select().order_by(-Pilot.abbr)
         elif sort_param == 'name':
-            sorted_db = Pilot.select()
+            sorted_db = Pilot.select().order_by(Pilot.abbr)
         elif desc == 'desc' and sort_param == 'position':
-            sorted_db = Pilot.select().join(SessionTime).group_by(Pilot).order_by(SessionTime.lap_time.desc())
+            sorted_db = Pilot.select().join(SessionTime).group_by(Pilot).order_by(-SessionTime.lap_time)
         else:
             sorted_db = Pilot.select().join(SessionTime).group_by(Pilot).order_by(SessionTime.lap_time)
         for key in sorted_db:
