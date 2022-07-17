@@ -28,6 +28,7 @@ class SessionTime(Model):
     class Meta:
         database = db
 
+
 def create_teams(teams):
     Team.insert_many(teams, fields=[Team.abbr, Team.name, Team.engine, Team.nation, Team.base]).execute()
 

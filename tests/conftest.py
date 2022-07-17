@@ -1,3 +1,5 @@
+import sqlite3
+
 import pytest
 from src.flask_report.flask_main import create_app
 
@@ -16,3 +18,10 @@ def client():
 def runner():
     app = create_app()
     return app.test_cli_runner()
+
+#db
+# @pytest.fixture
+# def session():
+#     connection = sqlite3.connect(':memory')
+#     db_session = connection.cursor()
+#     db_session.execute()
