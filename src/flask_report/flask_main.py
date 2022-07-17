@@ -2,11 +2,9 @@ from flask import Flask
 from src.flask_report.api.routes_api import *
 from src.flask_report.site.routes_html import *
 from flask_swagger_ui import get_swaggerui_blueprint
-from src.flask_report.DB.models import *
 
 
 def create_app():
-
     app = Flask(__name__)
     app.config['JSON_SORT_KEYS'] = False
     app.register_blueprint(api_bp)
