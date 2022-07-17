@@ -2,13 +2,18 @@ from flask import Flask
 from src.flask_report.api.routes_api import *
 from src.flask_report.site.routes_html import *
 from flask_swagger_ui import get_swaggerui_blueprint
-from src.flask_report.DB.DB import *
+# from src.flask_report.DB.DB import *
+from src.flask_report.config import teams, pilot_nations
 
+
+#цетут треба визивати, чи в DB?
 create_teams(teams)
-create_pilots_and_lap_times(pilots, pilot_nations)
+create_pilots(pilots, pilot_nations)
+create_times(pilots)
 
 
 def create_app():
+
     app = Flask(__name__)
     app.config['JSON_SORT_KEYS'] = False
     app.register_blueprint(api_bp)

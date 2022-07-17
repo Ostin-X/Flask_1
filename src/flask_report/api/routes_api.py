@@ -1,8 +1,6 @@
 from flask_restful import Resource, abort, Api
 from flask import request, Response, Blueprint, jsonify
-# import dataclasses
 from dicttoxml import dicttoxml
-# from src.flask_report.config import pilots
 from src.flask_report.DB.DB import *
 
 api_bp = Blueprint('api', __name__, url_prefix='/api/v1')
@@ -28,19 +26,12 @@ class DriversApi(Resource):
 
 
 def get_result_list(driver_id, desc, sort_param):
-    # if driver_id and driver_id.upper() not in pilots:
     if driver_id and not Pilot.select().where(Pilot.abbr == driver_id.upper()):
         abort(404, message=f'No driver {driver_id}')
     elif driver_id:
-        # result = get_result_pilot(pilots[driver_id.upper()], sort_param)
         result = get_result_pilot(Pilot.get(Pilot.abbr == driver_id.upper()), sort_param)
     else:
         result = {}
-        # if sort_param == 'position':
-        #     sort_func = lambda x: x[1].position
-        # else:
-        #     sort_func = lambda x: x[1].name.split()[1]
-        # for key, pilot in sorted(pilots.items(), key=sort_func, reverse=desc == 'desc'):
         if desc == 'desc' and sort_param == 'name':
             sorted_db = Pilot.select().order_by(Pilot.abbr.desc())
         elif sort_param == 'name':
@@ -50,16 +41,12 @@ def get_result_list(driver_id, desc, sort_param):
         else:
             sorted_db = Pilot.select().join(SessionTime).group_by(Pilot).order_by(SessionTime.lap_time)
         for key in sorted_db:
-            # result[key] = get_result_pilot(pilot, sort_param)
             result[key.abbr] = get_result_pilot(Pilot.get(Pilot.abbr == key), sort_param)
     return result
 
 
 def get_result_pilot(pilot, sort_param):
-    # result = dataclasses.asdict(pilot)
     result = {'abbr': pilot.abbr, 'name': pilot.name, 'team': pilot.team.name}
-    # if sort_param == 'name':
-    #     del result['lap_time']
     if sort_param == 'position':
         result['lap_time'] = SessionTime.get(SessionTime.pilot_abbr == result['abbr']).lap_time
     return result
