@@ -2,7 +2,7 @@ from report_f1.funcs import build_report
 
 data_dir = 'static/data'
 
-pilots = build_report(data_dir)
+pilots_list = build_report(data_dir)
 
 
 teams = [['Sauber', 'Ferrari', 'Switzerland', 'Hinwill, CH'],

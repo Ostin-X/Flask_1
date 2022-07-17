@@ -1,6 +1,6 @@
 from flask_restful import Resource, Api, abort
 from flask import make_response, render_template, request, Blueprint
-from src.flask_report.config import pilots, menu
+from src.flask_report.config import pilots_list, menu
 
 site_bp = Blueprint('site', __name__)
 site = Api(site_bp)
@@ -8,7 +8,7 @@ site = Api(site_bp)
 
 class Report(Resource):
     def get(self):
-        return make_response(render_template('report.html', title='Report', menu=menu, pilots=pilots.values()), 200)
+        return make_response(render_template('report.html', title='Report', menu=menu, pilots=pilots_list.values()), 200)
 
 
 # class Report(Resource):
@@ -24,11 +24,11 @@ class Drivers(Resource):
     def get(self, driver_id=None):
         desc = request.args.get('order', 'Ascending')
         if driver_id:
-            if driver_id.upper() not in pilots:
+            if driver_id.upper() not in pilots_list:
                 abort(404, message=f'No driver {driver_id}')
-            pilotzzz = [pilots[driver_id]]
+            pilotzzz = [pilots_list[driver_id]]
         else:
-            pilotzzz = sorted(pilots.values(), key=lambda x: x.name.split()[1], reverse=desc == 'Descending')
+            pilotzzz = sorted(pilots_list.values(), key=lambda x: x.name.split()[1], reverse=desc == 'Descending')
         return make_response(render_template('drivers.html', title='Drivers', menu=menu,
                                              pilots=pilotzzz, desc=desc[0],
                                              data=['Ascending', 'Descending']), 200)

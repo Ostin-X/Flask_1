@@ -1,7 +1,7 @@
 from flask_restful import Resource, abort, Api
 from flask import request, Response, Blueprint, jsonify
 from dicttoxml import dicttoxml
-from src.flask_report.DB.DB import *
+from src.flask_report.DB.models import *
 
 api_bp = Blueprint('api', __name__, url_prefix='/api/v1')
 api = Api(api_bp)
@@ -35,7 +35,7 @@ def get_result_list(driver_id, desc, sort_param):
         if desc == 'desc' and sort_param == 'name':
             sorted_db = Pilot.select().order_by(Pilot.abbr.desc())
         elif sort_param == 'name':
-            sorted_db = Pilot.select().order_by(Pilot.abbr)
+            sorted_db = Pilot.select()
         elif desc == 'desc' and sort_param == 'position':
             sorted_db = Pilot.select().join(SessionTime).group_by(Pilot).order_by(SessionTime.lap_time.desc())
         else:

@@ -35,20 +35,20 @@ def test_drivers_request(client, test_input):
 def test_single_driver_request(client, test_input):
     response = client.get(test_input)
     assert response.status_code == 200
-    assert bytes(str(pilots[test_input[-3:]].name), 'utf-8') in response.data
-    assert bytes(str(pilots[test_input[-3:]].team), 'utf-8') in response.data
-    assert bytes(str(pilots[test_input[-3:]].lap_time), 'utf-8') not in response.data
+    assert bytes(str(pilots_list[test_input[-3:]].name), 'utf-8') in response.data
+    assert bytes(str(pilots_list[test_input[-3:]].team), 'utf-8') in response.data
+    assert bytes(str(pilots_list[test_input[-3:]].lap_time), 'utf-8') not in response.data
     assert b'Force India' not in response.data
 
 
 def test_pilots():
-    assert type(pilots) == dict
-    assert len(pilots) == 19
-    assert 'HAM' in pilots
-    assert 'VER' not in pilots.keys()
-    assert type(pilots['VET']) == Pilot
-    assert pilots['BOT'].name == 'Valtteri Bottas'
-    assert pilots['RAI'].team == 'Ferrari'
+    assert type(pilots_list) == dict
+    assert len(pilots_list) == 19
+    assert 'HAM' in pilots_list
+    assert 'VER' not in pilots_list.keys()
+    assert type(pilots_list['VET']) == Pilot
+    assert pilots_list['BOT'].name == 'Valtteri Bottas'
+    assert pilots_list['RAI'].team == 'Ferrari'
 
 
 def test_report_request_context():
