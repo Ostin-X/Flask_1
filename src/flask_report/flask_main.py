@@ -3,6 +3,7 @@ from src.flask_report.api.routes_api import *
 from src.flask_report.site.routes_html import *
 from flask_swagger_ui import get_swaggerui_blueprint
 
+db.init('pilots.db')
 
 def create_app():
     app = Flask(__name__)
