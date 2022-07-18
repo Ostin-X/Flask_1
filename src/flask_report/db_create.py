@@ -1,4 +1,4 @@
-from src.flask_report.DB.models import *
+from src.flask_report.db.models import *
 from config import teams, pilots_list, pilot_nations
 
 db.create_tables([Team, Pilot, SessionTime])

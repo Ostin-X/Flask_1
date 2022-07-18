@@ -1,6 +1,6 @@
 import pytest
 import os
-from src.flask_report.DB.models import *
+from src.flask_report.db.models import *
 from src.flask_report.config import *
 
 
