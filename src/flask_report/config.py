@@ -20,6 +20,6 @@ pilot_nations = {'RIC': 'Australia', 'VET': 'Germany', 'HAM': 'United Kingdom', 
                  'VAN': 'Belgium', 'SIR': 'ass', 'LEC': 'Monaco', 'GRO': 'France', 'HAR': 'United Kingdom',
                  'ERI': 'Sweden', 'STR': 'United Kingdom', 'MAG': 'Denmark'}
 
-menu = [{"name": "Report", "url": f"/report?order=Ascending"},
+menu = [{"name": "Report", "url": f"/report"},
         {"name": "Drivers", "url": f"/report/drivers?order=Ascending"},
         {"name": "HAM", "url": f"/ham"}]

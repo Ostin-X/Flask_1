@@ -41,8 +41,8 @@ def get_result_list(driver_id, desc, sort_param):
             sorted_db = Pilot.select().join(SessionTime).group_by(Pilot).order_by(-SessionTime.lap_time)
         else:
             sorted_db = Pilot.select().join(SessionTime).group_by(Pilot).order_by(SessionTime.lap_time)
-        for key in sorted_db:
-            result[key.abbr] = get_result_pilot(Pilot.get(Pilot.abbr == key.abbr), sort_param)
+        for pilot in sorted_db:
+            result[pilot.abbr] = get_result_pilot(pilot, sort_param)
     return result
 
 
@@ -51,6 +51,7 @@ def get_result_pilot(pilot, sort_param):
     if sort_param == 'position':
         result['lap_time'] = SessionTime.get(SessionTime.pilot_abbr == result['abbr']).lap_time
     return result
+
 
 def get_result_format(result, format_):
     if format_ == 'json':

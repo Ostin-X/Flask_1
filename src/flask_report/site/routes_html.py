@@ -8,7 +8,8 @@ site = Api(site_bp)
 
 class Report(Resource):
     def get(self):
-        return make_response(render_template('report.html', title='Report', menu=menu, pilots=pilots_list.values()), 200)
+        return make_response(render_template('report.html', title='Report', menu=menu, pilots=pilots_list.values()),
+                             200)
 
 
 # class Report(Resource):
