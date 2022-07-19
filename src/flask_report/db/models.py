@@ -36,8 +36,10 @@ def create_teams(teams):
 
 
 def create_pilots(pilots, pilot_nations):
+    print(pilot_nations)
     for ab, pi in pilots.items():
         if not Pilot.select().where(Pilot.abbr == ab):
+            print(ab, pi.name, pi.team, pilot_nations[ab])
             Pilot.create(abbr=ab, name=pi.name, team=pi.team, nation=pilot_nations[ab])
 
 

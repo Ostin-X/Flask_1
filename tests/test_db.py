@@ -15,12 +15,10 @@ def test_db():
     assert SessionTime.get(SessionTime.pilot_abbr == 'HAM').lap_time == 'No time'
 
 
-def test_db2():
+def test_db2(database_create):
     elements_number = 3
-    test_teams_list = []
-    while elements_number:
-        test_teams_list.append(
-            [f'te{elements_number}', f'team_name_{elements_number}', f'team_engine_{elements_number}',
-             f'team_nation_{elements_number}', f'team_base_{elements_number}'])
-        elements_number -= 1
-    assert test_teams_list == 4
+    assert isinstance(db, SqliteDatabase)
+    assert Team.get(Team.abbr == f'te{elements_number}').name == f'team_name_{elements_number}'
+    assert Pilot.get(Pilot.nation == f'driver_nation_{elements_number}').name == f'driver_name_{elements_number}'
+    assert SessionTime.get(
+        SessionTime.pilot_abbr == f'dr{elements_number}').lap_time == f'{elements_number}:0{elements_number}:0{elements_number}.{elements_number}00'
