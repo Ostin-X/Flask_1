@@ -21,8 +21,9 @@ def runner():
     app = create_app()
     return app.test_cli_runner()
 
+
 @pytest.fixture()
-def database_create():
+def database_create_in_memory():
     elements_number = 3
     test_teams_list, test_drivers_nations_dict, test_pilots_dict = [], {}, {}
     while elements_number:
@@ -41,7 +42,7 @@ def database_create():
 
         elements_number -= 1
 
-    db.init('test_base.db')
+    db.init(':memory:')
     db.create_tables([Team, Pilot, SessionTime])
     create_teams(test_teams_list)
     create_pilots(test_pilots_dict, test_drivers_nations_dict)

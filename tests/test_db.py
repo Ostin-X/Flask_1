@@ -15,10 +15,11 @@ def test_db():
     assert SessionTime.get(SessionTime.pilot_abbr == 'HAM').lap_time == 'No time'
 
 
-def test_db2(database_create):
-    elements_number = 3
+@pytest.mark.parametrize('elements_number', [1, 2, 3])
+def test_db2(database_create_in_memory, elements_number):
     assert isinstance(db, SqliteDatabase)
     assert Team.get(Team.abbr == f'te{elements_number}').name == f'team_name_{elements_number}'
     assert Pilot.get(Pilot.nation == f'driver_nation_{elements_number}').name == f'driver_name_{elements_number}'
+    assert Pilot.get(Pilot.nation == f'driver_nation_{elements_number}').team.name == f'team_name_{elements_number}'
     assert SessionTime.get(
         SessionTime.pilot_abbr == f'dr{elements_number}').lap_time == f'{elements_number}:0{elements_number}:0{elements_number}.{elements_number}00'
