@@ -76,6 +76,6 @@ def test_drivers_request_context():
 
 
 def test_report_requests():
-    response = requests.get('http://127.0.0.1:5000/api/v1/report/VET?format=xml')
+    response = requests.get('http://127.0.0.1:5000/api/v1/report/drivers/VET?format=xml')
     assert response.status_code == 200
 
