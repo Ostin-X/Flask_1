@@ -8,6 +8,7 @@ db.init('pilots.db')
 def create_app():
     app = Flask(__name__)
     app.config['JSON_SORT_KEYS'] = False
+    app.config['JSON_AS_ASCII'] = False
     app.register_blueprint(api_bp)
     app.register_blueprint(site_bp)
 
