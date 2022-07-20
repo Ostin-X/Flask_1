@@ -1,11 +1,7 @@
 from flask_restful import Resource, abort, Api
 from flask import request, Response, Blueprint, jsonify
 from dicttoxml import dicttoxml
-from dict2xml import dict2xml
 from src.flask_report.db.models import *
-import xml.etree.ElementTree as ET
-from xml.etree.ElementTree import Element, SubElement, Comment, tostring
-import xml.dom.minidom
 
 api_bp = Blueprint('api', __name__, url_prefix='/api/v1')
 api = Api(api_bp)
