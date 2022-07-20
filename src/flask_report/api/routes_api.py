@@ -1,7 +1,9 @@
 from flask_restful import Resource, abort, Api
 from flask import request, Response, Blueprint, jsonify
 from dicttoxml import dicttoxml
+from dict2xml import dict2xml
 from src.flask_report.db.models import *
+from collections import OrderedDict
 
 api_bp = Blueprint('api', __name__, url_prefix='/api/v1')
 api = Api(api_bp)
@@ -32,7 +34,7 @@ class DriversApi(Resource):
         else:
             selected_db_pilot = Pilot.select().where(Pilot.abbr == driver_id.upper())
             if selected_db_pilot:
-                result = get_result_pilot(selected_db_pilot.get())
+                result = [get_result_pilot(selected_db_pilot.get())]
             else:
                 abort(404, message=f'No driver {driver_id}')
         result = get_result_format(result, format_)
@@ -57,12 +59,16 @@ def get_result_format(result, format_):
     if format_ == 'json':
         result = jsonify(result).data
     else:
-        if type(result) == list:
-            temp_result = result
-            result = {}
-            for numb, elem in enumerate(temp_result):
-                result[f'Driver_{numb+1}'] = elem
-        result = dicttoxml(result, attr_type=False)
+        print(result)
+        tmp_str = ''
+        for row in result:
+            tmp_str += '<driver>'
+            for key, item in row.items():
+                tmp_str += f'<{key}>{item}</{key}>'
+            tmp_str += '</driver>'
+        # result = '<?xml version="1.0" encoding="UTF-8" ?><root>' + dict2xml(result, wrap="driver", newlines=False,
+        #                                                                     indent="") + '</root>'
+        result = bytes('<?xml version="1.0" encoding="UTF-8" ?><root>' + tmp_str + '</root>', 'utf-8')
     return result
 
 

@@ -34,11 +34,11 @@ def test_report_api_v1_json_xml(client, test_input, format_res, bytes_res1, byte
                                                               b'"RIC","name":"Daniel Ricciar'),
                           ('/api/v1/report/drivers?format=xml',
                            'application/xml',
-                           b'river_10><abbr>MAG</abbr><name>Kevin Mag',
+                           b'river><abbr>MAG</abbr><name>Kevin Mag',
                            b'/abbr><name>Esteban Ocon</name><team>Forc'),
                           ('/api/v1/report/drivers?order=desc&format=xml',
                            'application/xml',
-                           b'river_10><abbr>MAG</abbr><name>Kevin Mag',
+                           b'river><abbr>MAG</abbr><name>Kevin Mag',
                            b'/abbr><name>Esteban Ocon</name><team>Forc')])
 def test_drivers_api_v1_json_xml(client, test_input, format_res, bytes_res1, bytes_res2):
     response = client.get(test_input)
@@ -67,7 +67,7 @@ def test_single_report_api_v1_json_xml(client, test_input, format_res, bytes_res
                                                                  b'{"abbr":"LEC","name":"Charles Leclerc","team":"Sauber"}'),
                                                                 ('/api/v1/report/drivers/BOT?format=xml',
                                                                  'application/xml',
-                                                                 b'Bottas</name><team>Mercedes</team></root>')])
+                                                                 b'Bottas</name><team>Mercedes</team></driver></root>')])
 def test_single_report_api_v1_json_xml(client, test_input, format_res, bytes_res1):
     response = client.get(test_input)
     assert response.status_code == 200
