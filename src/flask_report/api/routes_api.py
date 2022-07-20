@@ -25,7 +25,6 @@ class DriversApi(Resource):
         format_ = request.args.get('format', 'json')
         desc = request.args.get('order', 'acs')
 
-        # selected_db_pilot = Pilot.select().where(Pilot.abbr == driver_id.upper())
         if not driver_id:
             sort_by = -Pilot.abbr if desc == 'desc' else Pilot.abbr
             sorted_db = Pilot.select().order_by(sort_by)
