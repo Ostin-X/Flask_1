@@ -5,8 +5,16 @@ import requests
 
 @pytest.mark.parametrize('test_input, format_res, bytes_res1, bytes_res2', [('/api/v1/report', 'application/json',
                                                                              b'"team":"Toro Rosso","lap_tim',
-                                                                             b'"ERI":{"abbr":"ERI","name'),
+                                                                             b'ame":"Romain Grosjean","team":"Haas"'),
+                                                                            ('/api/v1/report?order=desc',
+                                                                             'application/json',
+                                                                             b'"team":"Toro Rosso","lap_tim',
+                                                                             b':"SAI","name":"Carlos Sainz","team":"Renault"'),
                                                                             ('/api/v1/report?format=xml',
+                                                                             'application/xml',
+                                                                             b'ndoorne</name><team type="str">McLaren</team><lap_time type="str">0:01:12.46',
+                                                                             b't"><abbr type="str">LEC</abbr><name type="str">Charles Leclerc</name><team t'),
+                                                                            ('/api/v1/report?format=xml&order=desc',
                                                                              'application/xml',
                                                                              b'ndoorne</name><team type="str">McLaren</team><lap_time type="str">0:01:12.46',
                                                                              b't"><abbr type="str">LEC</abbr><name type="str">Charles Leclerc</name><team t')])
@@ -20,12 +28,17 @@ def test_report_api_v1_json_xml(client, test_input, format_res, bytes_res1, byte
 
 @pytest.mark.parametrize('test_input, format_res, bytes_res1, bytes_res2',
                          [('/api/v1/report/drivers', 'application/json',
-                            b'"team":"Haas"},"OCO":{"abbr":"OCO","nam',
-                           b'"RIC","name":"Daniel Ricciar'),
+                           b'"abbr":"RAI","name":"Kimi R',
+                           b'"RIC","name":"Daniel Ricciar'), ('/api/v1/report/drivers?order=desc', 'application/json',
+                                                              b'team":"Renault"},{"abbr":"HAR","name"',
+                                                              b'"RIC","name":"Daniel Ricciar'),
                           ('/api/v1/report/drivers?format=xml',
                            'application/xml',
                            b'><LEC type="dict"><abbr type="str">L',
-                           b' type="str">Kimi R')])
+                           b' type="str">Kimi R'), ('/api/v1/report/drivers?order=desc&format=xml',
+                                                    'application/xml',
+                                                    b'><LEC type="dict"><abbr type="str">L',
+                                                    b' type="str">Kimi R')])
 def test_drivers_api_v1_json_xml(client, test_input, format_res, bytes_res1, bytes_res2):
     response = client.get(test_input)
     assert response.status_code == 200
@@ -78,4 +91,3 @@ def test_drivers_request_context():
 def test_report_requests():
     response = requests.get('http://127.0.0.1:5000/api/v1/report/drivers/VET?format=xml')
     assert response.status_code == 200
-

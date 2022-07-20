@@ -12,7 +12,7 @@ class ReportApi(Resource):
         format_ = request.args.get('format', 'json')
         desc = request.args.get('order', 'asc')
 
-        sort_by = -SessionTime.lap_time if desc == 'desc' else SessionTime.lap_time
+        sort_by = ~SessionTime.lap_time if desc == 'desc' else SessionTime.lap_time
         sorted_db = Pilot.select().join(SessionTime).group_by(Pilot).order_by(sort_by)
 
         result = get_result_list(sorted_db, True)
@@ -43,6 +43,8 @@ def get_result_list(sorted_db, need_lap_time=None):
     result = {}
     for pilot in sorted_db:
         result[pilot.abbr] = get_result_pilot(pilot, need_lap_time)
+        # result.append(get_result_pilot(pilot, need_lap_time))
+    # print([*result.values()])
     return result
 
 
@@ -55,8 +57,12 @@ def get_result_pilot(pilot, need_lap_time=None):
 
 def get_result_format(result, format_):
     if format_ == 'json':
-        result = jsonify(result).data
+        result = jsonify([*result.values()]).data
     else:
+        # temp_result = {}
+        # for elem in result:
+        #     temp_result[elem['abbr']] = elem
+        # result = {'drivers': temp_result}
         result = dicttoxml(result)
     return result
 
