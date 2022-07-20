@@ -65,7 +65,7 @@ def get_result_format(result, format_):
             temp_result = result
             result = {}
             for numb, elem in enumerate(temp_result):
-                result[f'Driver_{numb}'] = elem
+                result[f'Driver_{numb+1}'] = elem
         result = dicttoxml(result, attr_type=False)
     return result
 
