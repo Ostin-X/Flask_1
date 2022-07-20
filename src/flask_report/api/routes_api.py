@@ -1,7 +1,11 @@
 from flask_restful import Resource, abort, Api
 from flask import request, Response, Blueprint, jsonify
 from dicttoxml import dicttoxml
+from dict2xml import dict2xml
 from src.flask_report.db.models import *
+import xml.etree.ElementTree as ET
+from xml.etree.ElementTree import Element, SubElement, Comment, tostring
+import xml.dom.minidom
 
 api_bp = Blueprint('api', __name__, url_prefix='/api/v1')
 api = Api(api_bp)
@@ -40,11 +44,9 @@ class DriversApi(Resource):
 
 
 def get_result_list(sorted_db, need_lap_time=None):
-    result = {}
+    result = []
     for pilot in sorted_db:
-        result[pilot.abbr] = get_result_pilot(pilot, need_lap_time)
-        # result.append(get_result_pilot(pilot, need_lap_time))
-    # print([*result.values()])
+        result.append(get_result_pilot(pilot, need_lap_time))
     return result
 
 
@@ -57,13 +59,14 @@ def get_result_pilot(pilot, need_lap_time=None):
 
 def get_result_format(result, format_):
     if format_ == 'json':
-        result = jsonify([*result.values()]).data
+        result = jsonify(result).data
     else:
-        # temp_result = {}
-        # for elem in result:
-        #     temp_result[elem['abbr']] = elem
-        # result = {'drivers': temp_result}
-        result = dicttoxml(result)
+        if type(result) == list:
+            temp_result = result
+            result = {}
+            for numb, elem in enumerate(temp_result):
+                result[f'Driver_{numb}'] = elem
+        result = dicttoxml(result, attr_type=False)
     return result
 
 
