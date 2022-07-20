@@ -12,12 +12,12 @@ import requests
                                                                              b':"SAI","name":"Carlos Sainz","team":"Renault"'),
                                                                             ('/api/v1/report?format=xml',
                                                                              'application/xml',
-                                                                             b'ndoorne</name><team type="str">McLaren</team><lap_time type="str">0:01:12.46',
-                                                                             b't"><abbr type="str">LEC</abbr><name type="str">Charles Leclerc</name><team t'),
+                                                                             b'ndoorne</name><team>McLaren</team><lap_time>0:01:12.46',
+                                                                             b'><abbr>LEC</abbr><name>Charles Leclerc</name><team'),
                                                                             ('/api/v1/report?format=xml&order=desc',
                                                                              'application/xml',
-                                                                             b'ndoorne</name><team type="str">McLaren</team><lap_time type="str">0:01:12.46',
-                                                                             b't"><abbr type="str">LEC</abbr><name type="str">Charles Leclerc</name><team t')])
+                                                                             b'ndoorne</name><team>McLaren</team><lap_time>0:01:12.46',
+                                                                             b'><abbr>LEC</abbr><name>Charles Leclerc</name><team')])
 def test_report_api_v1_json_xml(client, test_input, format_res, bytes_res1, bytes_res2):
     response = client.get(test_input)
     assert response.status_code == 200
@@ -34,11 +34,12 @@ def test_report_api_v1_json_xml(client, test_input, format_res, bytes_res1, byte
                                                               b'"RIC","name":"Daniel Ricciar'),
                           ('/api/v1/report/drivers?format=xml',
                            'application/xml',
-                           b'><LEC type="dict"><abbr type="str">L',
-                           b' type="str">Kimi R'), ('/api/v1/report/drivers?order=desc&format=xml',
-                                                    'application/xml',
-                                                    b'><LEC type="dict"><abbr type="str">L',
-                                                    b' type="str">Kimi R')])
+                           b'river_9><abbr>MAG</abbr><name>Kevin Mag',
+                           b'/abbr><name>Esteban Ocon</name><team>Forc'),
+                          ('/api/v1/report/drivers?order=desc&format=xml',
+                           'application/xml',
+                           b'river_9><abbr>MAG</abbr><name>Kevin Mag',
+                           b'/abbr><name>Esteban Ocon</name><team>Forc')])
 def test_drivers_api_v1_json_xml(client, test_input, format_res, bytes_res1, bytes_res2):
     response = client.get(test_input)
     assert response.status_code == 200
@@ -66,7 +67,7 @@ def test_single_report_api_v1_json_xml(client, test_input, format_res, bytes_res
                                                                  b'{"abbr":"LEC","name":"Charles Leclerc","team":"Sauber"}'),
                                                                 ('/api/v1/report/drivers/BOT?format=xml',
                                                                  'application/xml',
-                                                                 b'<?xml version="1.0" encoding="UTF-8" ?><root><abbr type="str">BOT</abbr><nam')])
+                                                                 b'Bottas</name><team>Mercedes</team></root>')])
 def test_single_report_api_v1_json_xml(client, test_input, format_res, bytes_res1):
     response = client.get(test_input)
     assert response.status_code == 200
