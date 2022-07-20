@@ -65,9 +65,9 @@ def get_result_format(result, format_):
             for key, item in row.items():
                 tmp_str += f'<{key}>{item}</{key}>'
             tmp_str += '</driver>'
+        result = bytes('<?xml version="1.0" encoding="UTF-8" ?><root>' + tmp_str + '</root>', 'utf-8')
         # result = '<?xml version="1.0" encoding="UTF-8" ?><root>' + dict2xml(result, wrap="driver", newlines=False,
         #                                                                     indent="") + '</root>'
-        result = bytes('<?xml version="1.0" encoding="UTF-8" ?><root>' + tmp_str + '</root>', 'utf-8')
     return result
 
 
