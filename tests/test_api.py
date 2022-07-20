@@ -67,7 +67,7 @@ def test_single_report_api_v1_json_xml(client, test_input, format_res, bytes_res
                                                                  b'{"abbr":"LEC","name":"Charles Leclerc","team":"Sauber"}'),
                                                                 ('/api/v1/report/drivers/BOT?format=xml',
                                                                  'application/xml',
-                                                                 b'Bottas</name><team>Mercedes</team></driver></root>')])
+                                                                 b'Bottas</name><team>Mercedes</team></root>')])
 def test_single_report_api_v1_json_xml(client, test_input, format_res, bytes_res1):
     response = client.get(test_input)
     assert response.status_code == 200
