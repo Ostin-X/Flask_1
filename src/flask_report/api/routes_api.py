@@ -59,7 +59,6 @@ def get_result_format(result, format_):
     if format_ == 'json':
         result = jsonify(result).data
     else:
-        print(result)
         tmp_str = ''
         for row in result:
             tmp_str += '<driver>'
