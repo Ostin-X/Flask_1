@@ -3,7 +3,7 @@ from flask import request, Response, Blueprint, jsonify
 from dicttoxml import dicttoxml
 from dict2xml import dict2xml
 from src.flask_report.db.models import *
-from collections import OrderedDict
+
 
 api_bp = Blueprint('api', __name__, url_prefix='/api/v1')
 api = Api(api_bp)
@@ -65,6 +65,8 @@ def get_result_format(result, format_):
             for key, item in row.items():
                 tmp_str += f'<{key}>{item}</{key}>'
             tmp_str += '</driver>'
+            if len(result) == 1:
+                tmp_str = tmp_str[8:-9]
         result = bytes('<?xml version="1.0" encoding="UTF-8" ?><root>' + tmp_str + '</root>', 'utf-8')
         # result = '<?xml version="1.0" encoding="UTF-8" ?><root>' + dict2xml(result, wrap="driver", newlines=False,
         #                                                                     indent="") + '</root>'
