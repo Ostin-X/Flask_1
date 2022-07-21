@@ -13,7 +13,7 @@ class ReportApi(Resource):
         format_ = request.args.get('format', 'json')
         desc = request.args.get('order', 'asc')
 
-        sort_by = ~SessionTime.lap_time if desc == 'desc' else SessionTime.lap_time
+        sort_by = -SessionTime.lap_time if desc == 'desc' else SessionTime.lap_time
         sorted_db = Pilot.select().join(SessionTime).group_by(Pilot).order_by(sort_by)
 
         result = get_result_list(sorted_db, True)
