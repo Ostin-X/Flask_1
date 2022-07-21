@@ -1,6 +1,5 @@
 from flask_restful import Resource, abort, Api
 from flask import request, Response, Blueprint, jsonify
-from dicttoxml import dicttoxml
 from dict2xml import dict2xml
 from src.flask_report.db.models import *
 
@@ -59,17 +58,8 @@ def get_result_format(result, format_):
     if format_ == 'json':
         result = jsonify(result).data
     else:
-        tmp_str = ''
-        for row in result:
-            tmp_str += '<driver>'
-            for key, item in row.items():
-                tmp_str += f'<{key}>{item}</{key}>'
-            tmp_str += '</driver>'
-            if len(result) == 1:
-                tmp_str = tmp_str[8:-9]
-        result = bytes('<?xml version="1.0" encoding="UTF-8" ?><root>' + tmp_str + '</root>', 'utf-8')
-        # result = '<?xml version="1.0" encoding="UTF-8" ?><root>' + dict2xml(result, wrap="driver", newlines=False,
-        #                                                                     indent="") + '</root>'
+        result = '<?xml version="1.0" encoding="UTF-8" ?><root>' + dict2xml(result, wrap="driver", newlines=False,
+                                                                            indent="") + '</root>'
     return result
 
 
